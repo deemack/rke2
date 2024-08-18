@@ -990,6 +990,7 @@ DefaultPolicy default
       <package>autoyast2</package>
       <package>perl-Error</package>
       <package>git-core</package>
+      <package>ansible</package>
     </packages>
     <patterns t="list">
       <pattern>apparmor</pattern>
