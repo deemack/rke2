@@ -1,6 +1,6 @@
 ---
 - name: Configure RKE2 Cluster
-  hosts: beelink
+  hosts: minipc
   become: true
   gather_facts: true
   roles:
