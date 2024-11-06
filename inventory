@@ -1,14 +1,15 @@
-all:
-  children:
-    prod:
-      children:
-        minipc:
-          hosts:
-            kubeprod:
-        cloud:
-          hosts:
-            bluegoat:
-    dev:
-      minipc:
-        hosts:
-          kubedev:
+minipc:
+  hosts:
+    kubeprod:
+      ansible_connection: local
+    kubedev:
+      ansible_connection: local
+cloud:
+  hosts:
+    bluegoat:
+minipcprod:
+  hosts:
+    kubeprod:
+minipcdev:
+  hosts:
+    kubedev:
