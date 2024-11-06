@@ -1,9 +1,13 @@
 all:
   children:
-    beelink:
-      hosts:
-        beelinkprod:
-        beelinkdev:
-    cloud:
-      hosts:
-        bluegoat:
+    prod:
+      minipc:
+        hosts:
+          kubeprod:
+      cloud:
+        hosts:
+          bluegoat:
+    dev:
+      minipc:
+        hosts:
+          kubedev:
