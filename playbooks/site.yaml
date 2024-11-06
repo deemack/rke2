@@ -1,0 +1,4 @@
+---
+- name: Configure the RKE2 Cluster
+  import_playbook: cluster.yaml
+  tags: cluster
