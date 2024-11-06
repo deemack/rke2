@@ -1,0 +1,10 @@
+---
+- name: Fetch IP address of Host
+  vars:
+    command: "hostname -I | awk '{print $1}'"
+  shell: "{{ command }}"
+  register: host_ip
+
+- name: Host IP
+  debug:
+    var: host_ip.stdout
