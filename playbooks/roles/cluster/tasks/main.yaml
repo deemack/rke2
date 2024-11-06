@@ -1,4 +1,23 @@
 ---
+
+- name: Get UUID of Storage Drive
+  shell: lsblk -no uuid /dev/sda | xargs
+  register: uuid
+
+- name: UUID of Storage Device
+  debug:
+    var: uuid.stdout
+
+- name: Mount Storage Device by UUID
+  mount:
+    path: /mnt/storage
+    src: UUID={{ uuid.std }}
+    fstype: ntfs
+    opts: permissions,locale=en_US.utf8
+    state: mounted
+    dump: 0
+    passno: 2
+
 - name: Fetch IP address of Host
   vars:
     command: "hostname -I | awk '{print $1}'"
