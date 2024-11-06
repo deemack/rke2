@@ -6,12 +6,12 @@
 
 - name: UUID of Storage Device
   debug:
-    var: uuid.stdout
+    var: "{{ uuid.stdout }}"
 
 - name: Mount Storage Device by UUID
   mount:
     path: /mnt/storage
-    src: UUID={{ uuid.std }}
+    src: UUID={{ uuid.stdout }}
     fstype: ntfs
     opts: permissions,locale=en_US.utf8
     state: mounted
