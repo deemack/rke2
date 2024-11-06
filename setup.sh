@@ -10,7 +10,7 @@ printf "${CYAN}Please provides some system variables${NC}\n"
 read -p "Enter the hostname: " HOSTNAME
 read -p "Enter the host IP address: " HOSTIP
 
-printf "${GREEN}Updating hosts file${NC}\n
+printf "${GREEN}Updating hosts file${NC}\n"
 echo "$HOSTIP $HOSTNAME" | sudo tee -a /etc/hosts
 
 printf "${GREEN}Add entry to fstab for SSD${NC}\n"
