@@ -14,6 +14,7 @@ printf "${GREEN}Updating hosts file${NC}\n"
 echo "$HOSTIP $HOSTNAME" | sudo tee -a /etc/hosts
 
 printf "${GREEN}Add entry to fstab for SSD${NC}\n"
+sudo mkdir -p /mnt/storage
 uuid=$(lsblk -no uuid /dev/sda | xargs)
 fstab_entry="UUID=""$uuid"" /mnt/storage ntfs permissions,locale=en_US.utf8 0 2"
 echo $fstab_entry | sudo tee -a /etc/fstab
