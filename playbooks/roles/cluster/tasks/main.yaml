@@ -27,3 +27,26 @@
 - name: Host IP
   debug:
     var: host_ip.stdout
+
+- name: Change kubernetes-dashboard service to NodePort
+  kubernetes.core.k8s_service:
+    kubeconfig: /home/rke2.yaml
+    state: present
+    name: kubernetes-dashboard
+    namespace: kube-system
+    inline:
+      spec:
+        externalTrafficPolicy: Cluster
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - nodePort: 32075
+          port: 443
+          protocol: TCP
+          targetPort: 8443
+        selector:
+          k8s-app: kubernetes-dashboard
+        sessionAffinity: None
+        type: NodePort
