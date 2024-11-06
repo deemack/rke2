@@ -1,12 +1,13 @@
 all:
   children:
     prod:
-      minipc:
-        hosts:
-          kubeprod:
-      cloud:
-        hosts:
-          bluegoat:
+      children:
+        minipc:
+          hosts:
+            kubeprod:
+        cloud:
+          hosts:
+            bluegoat:
     dev:
       minipc:
         hosts:
