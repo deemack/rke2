@@ -3,6 +3,8 @@
   shell: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
   args:
     executable: /bin/bash
+  become: yes
+  become_user: dave
     
 
 - name: Add Dashboard
