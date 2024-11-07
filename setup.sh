@@ -18,10 +18,7 @@ echo "$HOSTIP $HOSTNAME" | sudo tee -a /etc/hosts
 printf "${GREEN}Updating packages${NC}\n"
 sudo zypper refresh && sudo zypper update -y
 
-printf "${GREEN}Cloning RKE2 repositorys${NC}\n"
-git clone https://github.com/deemack/homelab.git
-
 printf "${GREEN}System is ready to be provisioned via Ansible${NC}\n"
-cd rke2
+cd ~/rke2
 
 printf "${GREEN}Eg. ansible-playbook -i inventory playbooks/site.yaml -K --limit kubedev${NC}\n"
