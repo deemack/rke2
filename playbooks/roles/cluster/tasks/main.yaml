@@ -33,25 +33,7 @@
     path: /var/lib/rancher/rke2/server/manifests
     state: directory
 
-- name: Change kubernetes-dashboard service to NodePort
-  kubernetes.core.k8s_service:
-    kubeconfig: /home/rke2.yaml
-    state: present
-    name: kubernetes-dashboard
-    namespace: kube-system
-    inline:
-      spec:
-        externalTrafficPolicy: Cluster
-        internalTrafficPolicy: Cluster
-        ipFamilies:
-        - IPv4
-        ipFamilyPolicy: SingleStack
-        ports:
-        - nodePort: 32075
-          port: 443
-          protocol: TCP
-          targetPort: 8443
-        selector:
-          k8s-app: kubernetes-dashboard
-        sessionAffinity: None
-        type: NodePort
+- name: Copy nginx-config file
+  copy:
+    src: config-nginx.yaml
+    dest: /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml
