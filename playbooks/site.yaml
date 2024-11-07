@@ -2,3 +2,7 @@
 - name: Configure the RKE2 Cluster
   import_playbook: cluster.yaml
   tags: cluster
+
+- name: Configure Dashboard
+  import_playbook: dashboard.yaml
+  tags: dashboard

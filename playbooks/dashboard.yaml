@@ -1,0 +1,7 @@
+---
+- name: Configure Dashboard
+  hosts: minipc
+  become: true
+  gather_facts: true
+  roles:
+    - dashboard

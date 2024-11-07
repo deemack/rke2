@@ -1,0 +1,6 @@
+---
+- name: Add Dashboard Helm Repo
+  shell: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
+
+- name: Add Dashboard
+  shell:   helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
