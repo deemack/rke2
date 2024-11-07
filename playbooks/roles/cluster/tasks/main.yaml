@@ -38,6 +38,11 @@
     src: config-nginx.yaml
     dest: /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml
 
+- name: install pre-requisites
+  pip:
+    name:
+      - kubernetes
+
 - name: Install RKE2 from binary
   shell: curl -sfL https://get.rke2.io |INSTALL_RKE2_TYPE=server  sh -
 
