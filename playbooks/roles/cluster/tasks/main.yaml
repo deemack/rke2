@@ -75,7 +75,7 @@
 - name: Download OpenEBS yaml 
   get_url:
     url: https://openebs.github.io/charts/openebs-operator.yaml
-    dest: /home/dave/rke2/playbooks/roles/cluster/files>/etc/openebs-operator.yaml
+    dest: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
