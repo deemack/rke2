@@ -13,3 +13,26 @@
     executable: /bin/bash
   become: yes
   become_user: dave
+
+- name: Change kubernetes-dashboard service to NodePort
+  kubernetes.core.k8s_service:
+    kubeconfig: /home/dave/rke2/rke2.yaml
+    state: present
+    name: kubernetes-dashboard-kong
+    namespace: kubernetes-dashboard
+    inline:
+      spec:
+        externalTrafficPolicy: Cluster
+        internalTrafficPolicy: Cluster
+        ipFamilies:
+        - IPv4
+        ipFamilyPolicy: SingleStack
+        ports:
+        - nodePort: 32075
+          port: 443
+          protocol: TCP
+          targetPort: 8443
+        selector:
+          k8s-app: kubernetes-dashboard-kong
+        sessionAffinity: None
+        type: NodePort
