@@ -18,7 +18,7 @@
   kubernetes.core.k8s_service:
     kubeconfig: /home/dave/rke2/rke2.yaml
     state: present
-    name: kubernetes-dashboard-kong
+    name: kubernetes-dashboard-kong-proxy
     namespace: kubernetes-dashboard
     inline:
       spec:
@@ -33,6 +33,6 @@
           protocol: TCP
           targetPort: 8443
         selector:
-          k8s-app: kubernetes-dashboard-kong
+          k8s-app: kubernetes-dashboard-kong-proxy
         sessionAffinity: None
         type: NodePort
