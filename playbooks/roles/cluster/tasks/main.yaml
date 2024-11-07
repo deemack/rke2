@@ -53,7 +53,9 @@
     dest: /home/dave/rke2/rke2.yaml
     owner: dave
     group: wheel
-
+    remote_src: true
+  become: yes
+  become_user: root
 
 - name: Export PATH
   shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
@@ -89,4 +91,4 @@
   kubernetes.core.k8s:
     kubeconfig: /home/dave/rke2/rke2.yaml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files>/etc/openebs-operator.yaml
+    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml
