@@ -8,8 +8,8 @@
     
 
 - name: Add Dashboard
-  shell:   helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
-    args:
+  shell: helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
+  args:
     executable: /bin/bash
   become: yes
   become_user: dave
