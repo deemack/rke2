@@ -87,6 +87,15 @@
   become: yes
   become_user: dave
 
+- name: Install Helm
+  shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
+
+- name: Configure Helm
+  shell: mkdir -p /home/dave/bin && cp ./helm $/home/dave/bin/helm && export PATH=$/home/dave/bin:$PATH
+  args:
+    chdir: /usr/local/bin
+    executable: /bin/bash
+
 - name: Download OpenEBS yaml 
   get_url:
     url: https://openebs.github.io/charts/openebs-operator.yaml
@@ -96,4 +105,4 @@
   kubernetes.core.k8s:
     kubeconfig: /home/dave/rke2/rke2.yaml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml
+    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml 
