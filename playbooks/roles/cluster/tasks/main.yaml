@@ -49,21 +49,36 @@
 
 - name: Export PATH
   shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
+  become: yes
+  become_user: dave
 
 - name: Export KUBCONFIG
   shell: export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
 
 - name: Append PATH to bashrc
-  shell: echo "export PATH=$PATH:/var/lib/rancher/rke2/bin" >> $HOME/.bashrc
+  lineinfile:
+    path: /home/dave/.bashrc
+    line: export PATH=$PATH:/var/lib/rancher/rke2/bin
+    create: yes
 
 - name: Append KUBECONFIG to bashrc
-  shell: echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml" >> $HOME/.bashrc 
+  lineinfile:
+    path: /home/dave/.bashrc
+    line: export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+    create: yes
 
 - name: Refresh bashrc
-  shell: source ~/.bashrc
+  shell: source /home/dave/.bashrc
+  become: yes
+  become_user: dave
+
+- name: Download OpenEBS yaml 
+  get_url:
+    url: https://openebs.github.io/charts/openebs-operator.yaml
+    dest: /home/dave/rke2/playbooks/roles/cluster/files>/etc/openebs-operator.yaml
 
 - name: Install OpenEBS Local Storage Solution
-  shell: kubectl apply -f https://openebs.github.io/charts/openebs-operator.yaml
-
-
-
+  kubernetes.core.k8s:
+    kubeconfig: /var/snap/microk8s/current/credentials/client.config
+    state: present
+    src: /home/dave/rke2/playbooks/roles/cluster/files>/etc/openebs-operator.yaml
