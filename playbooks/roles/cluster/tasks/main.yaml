@@ -57,7 +57,7 @@
   shell: echo "export PATH=$PATH:/var/lib/rancher/rke2/bin" >> $HOME/.bashrc
 
 - name: Append KUBECONFIG to bashrc
-  shell: echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml"  >> $HOME/.bashrc 
+  shell: echo "export KUBECONFIG=/etc/rancher/rke2/rke2.yaml" >> $HOME/.bashrc 
 
 - name: Refresh bashrc
   shell: source ~/.bashrc
