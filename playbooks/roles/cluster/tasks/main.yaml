@@ -47,13 +47,21 @@
 - name: Start the rke2-server service
   shell: systemctl start rke2-server.service
 
+- name: Copy kubeconfig
+  copy:
+    src: /etc/rancher/rke2/rke2.yaml
+    dest: /home/dave/rke2/rke2.yaml
+    owner: dave
+    group: wheel
+
+
 - name: Export PATH
   shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
   become: yes
   become_user: dave
 
 - name: Export KUBCONFIG
-  shell: export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+  shell: export KUBECONFIG=/home/dave/rke2/rke2.yaml
 
 - name: Append PATH to bashrc
   lineinfile:
@@ -64,7 +72,7 @@
 - name: Append KUBECONFIG to bashrc
   lineinfile:
     path: /home/dave/.bashrc
-    line: export KUBECONFIG=/etc/rancher/rke2/rke2.yaml
+    line: export KUBECONFIG=/home/dave/rke2/rke2.yaml
     create: yes
 
 - name: Refresh bashrc
@@ -79,6 +87,6 @@
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
-    kubeconfig: /etc/rancher/rke2/rke2.yaml
+    kubeconfig: /home/dave/rke2/rke2.yaml
     state: present
     src: /home/dave/rke2/playbooks/roles/cluster/files>/etc/openebs-operator.yaml
