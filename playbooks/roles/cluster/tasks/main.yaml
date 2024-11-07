@@ -91,9 +91,9 @@
   shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
   become: yes
   become_user: dave
-  
+
 - name: Configure Helm
-  shell: mkdir -p /home/dave/bin && cp ./helm $/home/dave/bin/helm && export PATH=$/home/dave/bin:$PATH
+  shell: mkdir -p /home/dave/bin && cp ./helm /home/dave/bin/helm && export PATH=/home/dave/bin:$PATH
   args:
     chdir: /usr/local/bin
     executable: /bin/bash
