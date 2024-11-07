@@ -28,6 +28,11 @@
   debug:
     var: host_ip.stdout
 
+- name: Create manifests folder
+  file:
+    path: /var/lib/rancher/rke2/server/manifests
+    state: directory
+
 - name: Change kubernetes-dashboard service to NodePort
   kubernetes.core.k8s_service:
     kubeconfig: /home/rke2.yaml
