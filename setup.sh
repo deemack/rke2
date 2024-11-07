@@ -19,6 +19,5 @@ printf "${GREEN}Updating packages${NC}\n"
 sudo zypper refresh && sudo zypper update -y
 
 printf "${GREEN}System is ready to be provisioned via Ansible${NC}\n"
-cd ~/rke2
 
 printf "${GREEN}Eg. ansible-playbook -i inventory playbooks/site.yaml -K --limit kubedev${NC}\n"
