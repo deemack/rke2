@@ -42,6 +42,7 @@
     chart_ref: rancher-latest/rancher
     release_namespace: cattle-system
     create_namespace: true
+    force: true
     set_values:
       - value: hostname=cluster.local
         value_type: string
