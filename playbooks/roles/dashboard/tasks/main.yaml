@@ -47,6 +47,5 @@
       - value: hostname=cluster.local
         value_type: string
       - value: bootstrapPassword=password 
-        value_type: string
   become: yes
   become_user: dave

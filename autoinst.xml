@@ -202,6 +202,11 @@
       <userlist/>
     </group>
     <group t="map">
+      <gid>1000</gid>
+      <groupname>dave</groupname>
+      <userlist/>
+    </group>
+    <group t="map">
       <gid>62</gid>
       <groupname>man</groupname>
       <userlist/>
@@ -1026,7 +1031,7 @@ DefaultPolicy default
       <authorized_keys t="list"/>
       <encrypted t="boolean">true</encrypted>
       <fullname>dave</fullname>
-      <gid>100</gid>
+      <gid>1000</gid>
       <home>/home/dave</home>
       <home_btrfs_subvolume t="boolean">false</home_btrfs_subvolume>
       <password_settings t="map">
