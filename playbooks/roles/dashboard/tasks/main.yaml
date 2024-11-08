@@ -13,8 +13,8 @@
 
 - name: Deploy Cert Manager
   kubernetes.core.helm:
-    name: rancher
-    chart_ref: rancher-latest/rancher
+    name: cert-manager
+    chart_ref: jetstack/cert-manager
     chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
