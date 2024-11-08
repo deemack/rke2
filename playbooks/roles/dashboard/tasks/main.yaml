@@ -3,6 +3,7 @@
   kubernetes.core.helm_repository:
     name: "{{ item.name }}"
     repo_url: "{{ item.url}}"
+    force_update: true
   loop:
     - { name: 'jetstack', url: ' https://charts.jetstack.io' }
     - { name: 'rancher-latest', url: 'https://releases.rancher.com/server-charts/latest' }
