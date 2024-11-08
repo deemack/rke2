@@ -15,7 +15,7 @@
   kubernetes.core.helm:
     name: rancher
     chart_ref: rancher-latest/rancher
-    chart_version: 1.7.1
+    chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
     set_values:
