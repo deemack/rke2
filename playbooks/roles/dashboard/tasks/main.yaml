@@ -5,7 +5,9 @@
     repo_url: "{{ item.url}}"
   loop:
     - { name: 'jetstack', url: ' https://charts.jetstack.io' }
-    - { name: 'rancher-latest', url: 'https://releases.rancher.com/server-charts/latest' }  
+    - { name: 'rancher-latest', url: 'https://releases.rancher.com/server-charts/latest' }
+  become: yes
+  become_user: dave  
 
 
 - name: Deploy Cert Manager
