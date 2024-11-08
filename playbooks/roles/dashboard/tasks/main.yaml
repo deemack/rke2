@@ -1,38 +1,28 @@
 ---
-- name: Add Dashboard Helm Repo
-  shell: helm repo add kubernetes-dashboard https://kubernetes.github.io/dashboard/
-  args:
-    executable: /bin/bash
-  become: yes
-  become_user: dave
-    
+- name: Add Helm Repos
+  helm_repository:
+    name: "{{ item.name }}"
+    repo_url: "{{ item.url}}"
+  loop:
+    - { name: 'jetstack', url: ' https://charts.jetstack.io' }
+    - { name: 'rancher-latest', url: 'https://releases.rancher.com/server-charts/latest' }  
 
-- name: Add Dashboard
-  shell: helm upgrade --install kubernetes-dashboard kubernetes-dashboard/kubernetes-dashboard --create-namespace --namespace kubernetes-dashboard
-  args:
-    executable: /bin/bash
-  become: yes
-  become_user: dave
 
-- name: Change kubernetes-dashboard service to NodePort
-  kubernetes.core.k8s_service:
-    kubeconfig: /home/dave/rke2/rke2.yaml
-    state: present
-    name: kubernetes-dashboard-kong-proxy
-    namespace: kubernetes-dashboard
-    inline:
-      spec:
-        externalTrafficPolicy: Cluster
-        internalTrafficPolicy: Cluster
-        ipFamilies:
-        - IPv4
-        ipFamilyPolicy: SingleStack
-        ports:
-        - nodePort: 32075
-          port: 443
-          protocol: TCP
-          targetPort: 8443
-        selector:
-          k8s-app: kubernetes-dashboard-kong-proxy
-        sessionAffinity: None
-        type: NodePort
+- name: Deploy Cert Manager
+  kubernetes.core.helm:
+    name: rancher
+    chart_ref: rancher-latest/rancher
+    chart_version: 1.7.1
+    release_namespace: cert-manager
+    create_namespace: true
+    set_values:
+      - value: installCRD=true
+        value_type: string
+
+
+- name: Deploy Rancher
+  kubernetes.core.helm:
+    name: rancher
+    chart_ref: rancher-latest/rancher
+    release_namespace: cattle-system
+    create_namespace: true
