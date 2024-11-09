@@ -1,4 +1,9 @@
 ---
+- name: Clean the RKE2 Cluster Node
+  import_playbook: clean.yaml
+  tags: clean
+  when: never
+  
 - name: Configure the RKE2 Cluster
   import_playbook: cluster.yaml
   tags: cluster

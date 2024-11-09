@@ -1,4 +1,7 @@
 ---
-- name: Clean the RKE2 Cluster Node
-  import_playbook: clean.yaml
-  tags: clean
+- name: Clean Node
+  hosts: minipc
+  become: true
+  gather_facts: true
+  roles:
+    - clean
