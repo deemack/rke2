@@ -1,0 +1,4 @@
+---
+- name: Clean the RKE2 Cluster Node
+  import_playbook: clean.yaml
+  tags: clean
