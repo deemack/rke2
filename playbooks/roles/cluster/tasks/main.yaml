@@ -118,4 +118,7 @@
   kubernetes.core.k8s:
     kubeconfig: /home/dave/rke2/rke2.yaml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml 
+    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml
+
+- name: Reboot the node
+  shell: reboot 
