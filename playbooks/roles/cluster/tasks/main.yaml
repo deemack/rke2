@@ -94,9 +94,6 @@
   become: yes
   become_user: dave
 
-- name: Refresh bashrc
-  shell: source /home/dave/.bashrc
-
 - name: Install Helm
   shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
   become: yes

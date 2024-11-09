@@ -1,4 +1,9 @@
 ---
+- name: Refresh bashrc
+  shell: source /home/dave/.bashrc
+  become: yes
+  become_user: dave
+  
 - name: Stop and Disable firewalld service
   service:
     name: firewalld
