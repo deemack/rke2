@@ -48,3 +48,14 @@
       - value: bootstrapPassword=password 
   become: yes
   become_user: dave
+
+- name: Stop firewalld to allow Rancher UI access
+  shell: systemctl stop firewalld
+  become: yes
+  become_user: dave
+
+- name: Disable firewalld to allow Rancher UI access
+  shell: systemctl disable firewalld
+  become: yes
+  become_user: dave
+ 

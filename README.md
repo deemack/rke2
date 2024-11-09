@@ -37,3 +37,22 @@ INSTALL_RKE2_TAR_PREFIX/bin if INSTALL_RKE2_TAR_PREFIX is set
 ```
 NS=`kubectl get ns |grep Terminating | awk 'NR==1 {print $1}'` && kubectl get namespace "$NS" -o json   | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/"   | kubectl replace --raw /api/v1/namespaces/$NS/finalize -f -
 ```
+
+or
+
+Need to remove the finalizer for kubernetes.
+
+Step 1:
+```
+kubectl get namespace <YOUR_NAMESPACE> -o json > <YOUR_NAMESPACE>.json
+```
+remove kubernetes from finalizers array which is under spec
+Step 2:
+```
+kubectl replace --raw "/api/v1/namespaces/<YOUR_NAMESPACE>/finalize" -f ./<YOUR_NAMESPACE>.json
+```
+Step 3:
+```
+kubectl get namespace
+```
+You can see that the annoying namespace is gone.
