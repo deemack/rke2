@@ -18,6 +18,7 @@
     chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
+    force: true
     set_values:
       - value: installCRD=true
   become: yes
