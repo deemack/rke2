@@ -52,6 +52,10 @@
 - name: Install RKE2 from binary
   shell: curl -sfL https://get.rke2.io |INSTALL_RKE2_TYPE=server  sh -
 
+- name: Sleep for 600 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 600
+
 - name: Enable rke2-server service
   shell: systemctl enable rke2-server.service
 
