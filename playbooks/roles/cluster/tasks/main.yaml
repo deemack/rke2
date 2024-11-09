@@ -13,8 +13,6 @@
     path: /mnt/storage
     state: directory
     mode: '0755'
-    owner: dave
-    group: dave
 
 - name: Mount Storage Device by UUID
   mount:
@@ -95,6 +93,9 @@
   shell: source /home/dave/.bashrc
   become: yes
   become_user: dave
+
+- name: Refresh bashrc
+  shell: source /home/dave/.bashrc
 
 - name: Install Helm
   shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
