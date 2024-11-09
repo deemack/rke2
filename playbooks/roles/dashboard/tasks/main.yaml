@@ -54,6 +54,4 @@
     name: firewalld
     state: stopped
     enabled: false
-  become: yes
-  become_user: dave
  
