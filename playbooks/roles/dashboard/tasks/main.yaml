@@ -3,7 +3,7 @@
   shell: source /home/dave/.bashrc
   become: yes
   become_user: dave
-  
+
 - name: Stop and Disable firewalld service
   service:
     name: firewalld
@@ -24,12 +24,12 @@
 
 - name: Deploy Cert Manager
   kubernetes.core.helm:
+    kubeconfig: /home/dave/rke2/rke2.yaml
     name: cert-manager
     chart_ref: jetstack/cert-manager
     chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
-    force: true
     set_values:
       - value: installCRD=true
   become: yes
