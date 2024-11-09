@@ -1,0 +1,9 @@
+---
+- name: Download cleanup script
+  shell: curl -sLO https://github.com/rancherlabs/support-tools/raw/master/extended-rancher-2-cleanup/extended-cleanup-rancher2.sh
+
+- name: Execute cleanup script
+  shell: bash extended-cleanup-rancher2.sh -f -i
+
+- name: Reboot the node
+  shell: reboot
