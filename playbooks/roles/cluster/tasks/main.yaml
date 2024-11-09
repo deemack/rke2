@@ -8,6 +8,14 @@
   debug:
     var: "{{ uuid.stdout }}"
 
+- name: Create mount direcotry for SSD
+  file:
+    path: /mnt/storage
+    state: directory
+    mode: '0755'
+    owner: dave
+    group: dave
+
 - name: Mount Storage Device by UUID
   mount:
     path: /mnt/storage
