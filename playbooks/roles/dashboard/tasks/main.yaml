@@ -1,4 +1,10 @@
 ---
+- name: Stop and Disable firewalld service
+  service:
+    name: firewalld
+    state: stopped
+    enabled: false
+ 
 - name: Add Helm Repos
   kubernetes.core.helm_repository:
     name: "{{ item.name }}"
@@ -49,9 +55,3 @@
   become: yes
   become_user: dave
 
-- name: Stop and Disable firewalld service
-  service:
-    name: firewalld
-    state: stopped
-    enabled: false
- 
