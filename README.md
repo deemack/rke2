@@ -33,3 +33,7 @@ INSTALL_RKE2_TAR_PREFIX/bin if INSTALL_RKE2_TAR_PREFIX is set
 - A kubeconfig file will be written to /etc/rancher/rke2/rke2.yaml.
 - A token that can be used to register other server or agent nodes will be created at /var/lib/rancher/rke2/server/node-token
 
+# delete a namespace and all its resources when it is stuck on Terminating
+```
+NS=`kubectl get ns |grep Terminating | awk 'NR==1 {print $1}'` && kubectl get namespace "$NS" -o json   | tr -d "\n" | sed "s/\"finalizers\": \[[^]]\+\]/\"finalizers\": []/"   | kubectl replace --raw /api/v1/namespaces/$NS/finalize -f -
+```
