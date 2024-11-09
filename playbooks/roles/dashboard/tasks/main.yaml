@@ -25,6 +25,7 @@
 - name: Deploy Cert Manager
   kubernetes.core.helm:
     kubeconfig: /home/dave/rke2/rke2.yaml
+    binary_path: /home/dave/bin/helm
     name: cert-manager
     chart_ref: jetstack/cert-manager
     chart_version: v1.7.1
