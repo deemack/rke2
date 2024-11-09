@@ -20,7 +20,6 @@
     create_namespace: true
     set_values:
       - value: installCRD=true
-        value_type: string
   become: yes
   become_user: dave
 
@@ -45,7 +44,6 @@
     force: true
     set_values:
       - value: hostname=cluster.local
-        value_type: string
       - value: bootstrapPassword=password 
   become: yes
   become_user: dave
