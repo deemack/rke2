@@ -31,8 +31,6 @@
     chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
-    set_values:
-      - value: installCRD=true
   become: yes
   become_user: dave
 
