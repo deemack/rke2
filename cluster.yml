@@ -1,7 +1,0 @@
----
-- name: Configure RKE2 Cluster
-  hosts: minipc
-  become: true
-  gather_facts: true
-  roles:
-    - cluster
