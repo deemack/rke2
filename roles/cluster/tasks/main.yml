@@ -61,6 +61,7 @@
   copy:
     src: /etc/rancher/rke2/rke2.yml
     dest: ~/rke2.yml
+    remote_src: true
   become: true
   become_user: root
 
