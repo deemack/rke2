@@ -14,7 +14,7 @@
 - name: Deploy Cert Manager
   kubernetes.core.helm:
     kubeconfig: /etc/rancher/rke2/rke2.yaml
-    binary_path: /home/dave/bin/helm
+    binary_path: /usr/local/bin/helm
     name: cert-manager
     chart_ref: jetstack/cert-manager
     chart_version: v1.7.1
