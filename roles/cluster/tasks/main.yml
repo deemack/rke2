@@ -97,5 +97,5 @@
     state: present
     src: /tmp/openebs-operator.yml
 
-- name: Reboot the node
-  shell: reboot
+#- name: Reboot the node
+#  shell: reboot
