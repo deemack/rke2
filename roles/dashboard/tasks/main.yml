@@ -24,23 +24,23 @@
   become_user: dave
 
 
-- name: Install release
-  ansible.builtin.shell:
-    set -o errexit
-    set -o pipefail
-    set -o nounset
+#- name: Install release
+#  ansible.builtin.shell:
+#    set -o errexit
+#    set -o pipefail
+#    set -o nounset
+#
+#    helm install {{ cert_manager_release_name }} {{ cert_manager_chart_name }}
+#    --namespace {{ cert_manager_namespace }}
+#    --version {{ cert_manager_chart_version }}
+#    {{ cert_manager_values_rendered }}
 
-    helm install {{ cert_manager_release_name }} {{ cert_manager_chart_name }}
-    --namespace {{ cert_manager_namespace }}
-    --version {{ cert_manager_chart_version }}
-    {{ cert_manager_values_rendered }}
-
-    exit 0
-  run_once: true
-  delegate_to: 127.0.0.1
-  changed_when: false
-  args:
-    executable: "/bin/bash"
+#    exit 0
+#  run_once: true
+#  delegate_to: 127.0.0.1
+#  changed_when: false
+#  args:
+#    executable: "/bin/bash"
 
 - name: Download Cert Manager yml
   get_url:
