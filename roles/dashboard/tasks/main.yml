@@ -13,7 +13,7 @@
 
 - name: Deploy Cert Manager
   kubernetes.core.helm:
-    kubeconfig: /home/dave/rke2/rke2.yml
+    kubeconfig: /etc/rancher/rke2/rke2.yaml
     binary_path: /home/dave/bin/helm
     name: cert-manager
     chart_ref: jetstack/cert-manager
@@ -49,7 +49,7 @@
 
 - name: Apply Cert Manager Config
   kubernetes.core.k8s:
-    kubeconfig: /home/dave/rke2/rke2.yml
+    kubeconfig: /etc/rancher/rke2/rke2.yaml
     state: present
     src: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yml
 
