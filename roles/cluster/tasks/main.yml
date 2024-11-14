@@ -86,17 +86,6 @@
 - name: Refresh bashrc
   shell: source ~/.bashrc
 
-- name: Install Helm
-  shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
-  become: true
-  become_user: root
-
-- name: Configure Helm
-  shell: mkdir -p ~/bin && cp ./helm ~/bin/helm && export PATH=~/bin:$PATH
-  args:
-    chdir: /usr/local/bin
-    executable: /bin/bash
-
 - name: Download OpenEBS yml
   get_url:
     url: https://openebs.github.io/charts/openebs-operator.yml
