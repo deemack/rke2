@@ -96,6 +96,9 @@
     kubeconfig: ~/rke2.yml
     state: present
     src: /tmp/openebs-operator.yml
+    remote_src: true
+  become: true
+  become_user: root
 
 #- name: Reboot the node
 #  shell: reboot
