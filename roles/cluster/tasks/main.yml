@@ -58,7 +58,7 @@
   tags: cluster_sleep
 
 - name: Take ownership of kubeconfig
-  shell: chown -R $USER /etc/rancher/rke2/rke2.yaml
+  shell: chown -R dave /etc/rancher/rke2/rke2.yaml
 
 - name: Copy kubeconfig
   copy:
