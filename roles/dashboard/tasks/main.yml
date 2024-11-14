@@ -45,13 +45,13 @@
 - name: Download Cert Manager yml
   get_url:
     url: https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
-    dest: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yml
+    dest: /home/dave/rke2/roles/cluster/files/cert-manager.crds.yml
 
 - name: Apply Cert Manager Config
   kubernetes.core.k8s:
     kubeconfig: /etc/rancher/rke2/rke2.yaml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yml
+    src: /home/dave/rke2/roles/cluster/files/cert-manager.crds.yml
 
 - name: Deploy Rancher
   kubernetes.core.helm:
