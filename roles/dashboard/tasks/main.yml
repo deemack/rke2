@@ -63,6 +63,6 @@
     set_values:
       - value: hostname=cluster.local
       - value: bootstrapPassword=password
-  become: true
-  become_user: dave
+  #become: true
+  #become_user: dave
   notify: Stop and Disable firewalld
