@@ -11,7 +11,7 @@
   debug:
     var: "{{ uuid.stdout }}"
 
-- name: Create mount direcotry for SSD
+- name: Create mount directory for SSD
   file:
     path: /mnt/storage
     state: directory
@@ -56,6 +56,50 @@
   ansible.builtin.wait_for:
     timeout: 600
   tags: cluster_sleep
+
+- name: Create admin ServiceAccount
+  command: kubectl create serviceaccount admin-user -n kube-system
+  register: create_sa
+  tags: admin_user
+
+- name: Bind ServiceAccount to cluster-admin role
+  command: kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user
+  when: create_sa.changed
+  tags: admin_user
+
+- name: Get admin-user token
+  command: kubectl -n kube-system get secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}') -o jsonpath="{.data.token}" | base64 --decode
+  register: admin_token
+  tags: admin_user
+
+- name: Get certificate authority data
+  command: kubectl config view --raw -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'
+  register: ca_data
+  tags: admin_user
+
+- name: Create kubeconfig file
+  copy:
+    dest: "{{ lookup('env', 'HOME') }}/.kube/config"
+    content: |
+      apiVersion: v1
+      clusters:
+      - cluster:
+          certificate-authority-data: "{{ ca_data.stdout }}"
+          server: "{{ cluster_server }}"
+        name: "{{ cluster_name }}"
+      contexts:
+      - context:
+          cluster: "{{ cluster_name }}"
+          user: admin-user
+        name: admin-context
+      current-context: admin-context
+      kind: Config
+      preferences: {}
+      users:
+      - name: admin-user
+        user:
+          token: "{{ admin_token.stdout }}"
+  tags: admin_user
 
 - name: Take ownership of kubeconfig
   shell: chown -R dave /etc/rancher/rke2/rke2.yaml
