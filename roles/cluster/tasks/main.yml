@@ -93,7 +93,7 @@
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
-    #kubeconfig: /home/dave/rke2/rke2.yml
+    kubeconfig: ~/rke2.yml
     state: present
     src: /tmp/openebs-operator.yml
 
