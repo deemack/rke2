@@ -5,8 +5,8 @@
 
 - name: Configure the RKE2 Cluster
   import_playbook: cluster.yml
-  tags: cluster
+  tags: k8scluster
 
-- name: Configure Dashboard
-  import_playbook: dashboard.yml
-  tags: dashboard
+- name: Configure Monitoring
+  import_playbook: monitoring.yml
+  tags: monitoring
