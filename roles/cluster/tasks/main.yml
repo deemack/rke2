@@ -88,6 +88,8 @@
 
 - name: Install Helm
   shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
+  become: true
+  become_user: root
 
 - name: Configure Helm
   shell: mkdir -p ~/bin && cp ./helm ~/bin/helm && export PATH=~/bin:$PATH
