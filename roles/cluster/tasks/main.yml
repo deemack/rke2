@@ -61,21 +61,29 @@
   command: kubectl create serviceaccount admin-user -n kube-system
   register: create_sa
   tags: admin_user
+  become: true
+  become_user: root
 
 - name: Bind ServiceAccount to cluster-admin role
   command: kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user
   when: create_sa.changed
   tags: admin_user
+  become: true
+  become_user: root
 
 - name: Get admin-user token
   command: kubectl -n kube-system get secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}') -o jsonpath="{.data.token}" | base64 --decode
   register: admin_token
   tags: admin_user
+  become: true
+  become_user: root
 
 - name: Get certificate authority data
   command: kubectl config view --raw -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'
   register: ca_data
   tags: admin_user
+  become: true
+  become_user: root
 
 - name: Create kubeconfig file
   copy:
