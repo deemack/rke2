@@ -59,7 +59,7 @@
 
 - name: Copy kubeconfig
   copy:
-    src: /etc/rancher/rke2/rke2.yml
+    src: /etc/rancher/rke2/rke2.yaml
     dest: ~/rke2.yaml
 
 - name: Export PATH
