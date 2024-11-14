@@ -93,12 +93,12 @@
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
-    kubeconfig: /etc/rancher/rke2/rke2.yml
+    kubeconfig: /etc/rancher/rke2/rke2.yaml
     state: present
     src: /tmp/openebs-operator.yml
-    remote_src: true
-  become: true
-  become_user: root
+    #remote_src: true
+  #become: true
+  #become_user: root
 
 #- name: Reboot the node
 #  shell: reboot
