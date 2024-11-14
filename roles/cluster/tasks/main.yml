@@ -44,10 +44,7 @@
 
 - name: Install RKE2 from binary
   shell: curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE=server sh -
-
-- name: Sleep for 600 seconds and continue with play
-  ansible.builtin.wait_for:
-    timeout: 600
+  tags: rke2_script
 
 - name: Enable and Start the rke2-server service
   service:
@@ -55,10 +52,15 @@
     state: started
     enabled: true
 
+- name: Sleep for 600 seconds and continue with play
+  ansible.builtin.wait_for:
+    timeout: 600
+
 - name: Copy kubeconfig
   copy:
     src: /etc/rancher/rke2/rke2.yml
     dest: ~/rke2.yml
+    remote_src: true
 
 - name: Export PATH
   shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
