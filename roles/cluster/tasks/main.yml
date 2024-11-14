@@ -1,4 +1,7 @@
 ---
+- name: Set a hostname
+  ansible.builtin.hostname:
+    name: "{{ hostname }}"
 
 - name: Get UUID of Storage Drive
   shell: lsblk -no uuid /dev/sda | xargs
@@ -24,17 +27,7 @@
     dump: 0
     passno: 2
 
-- name: Fetch IP address of Host
-  vars:
-    command: "hostname -I | awk '{print $1}'"
-  shell: "{{ command }}"
-  register: host_ip
-
-- name: Host IP
-  debug:
-    var: host_ip.stdout
-
-- name: Create manifests folder
+- name: Create Rancher manifests folder
   file:
     path: /var/lib/rancher/rke2/server/manifests
     state: directory
@@ -44,67 +37,55 @@
     src: config-nginx.yml
     dest: /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yml
 
-- name: install pre-requisites
+- name: Install kubernetes pre-requisites
   pip:
     name:
       - kubernetes
 
 - name: Install RKE2 from binary
-  shell: curl -sfL https://get.rke2.io |INSTALL_RKE2_TYPE=server  sh -
+  shell: curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE=server sh -
 
 - name: Sleep for 600 seconds and continue with play
   ansible.builtin.wait_for:
     timeout: 600
 
-- name: Enable rke2-server service
-  shell: systemctl enable rke2-server.service
-
-- name: Start the rke2-server service
-  shell: systemctl start rke2-server.service
+- name: Enable and Start the rke2-server service
+  service:
+    name: rke2-server.service
+    state: started
+    enabled: true
 
 - name: Copy kubeconfig
   copy:
     src: /etc/rancher/rke2/rke2.yml
-    dest: /home/dave/rke2/rke2.yml
-    owner: dave
-    group: dave
-    mode: '400'
-    remote_src: true
-  become: yes
-  become_user: root
+    dest: ~/rke2.yml
 
 - name: Export PATH
   shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
-  become: yes
-  become_user: dave
 
 - name: Export KUBCONFIG
-  shell: export KUBECONFIG=/home/dave/rke2/rke2.yml
+  shell: export KUBECONFIG=~/rke2.yml
 
 - name: Append PATH to bashrc
   lineinfile:
-    path: /home/dave/.bashrc
+    path: ~/.bashrc
     line: export PATH=$PATH:/var/lib/rancher/rke2/bin
-    create: yes
+    create: true
 
 - name: Append KUBECONFIG to bashrc
   lineinfile:
-    path: /home/dave/.bashrc
-    line: export KUBECONFIG=/home/dave/rke2/rke2.yml
-    create: yes
+    path: ~/.bashrc
+    line: export KUBECONFIG=~/rke2.yml
+    create: true
 
 - name: Refresh bashrc
-  shell: source /home/dave/.bashrc
-  become: yes
-  become_user: dave
+  shell: source ~/.bashrc
 
 - name: Install Helm
   shell: curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3|bash
-  become: yes
-  become_user: dave
 
 - name: Configure Helm
-  shell: mkdir -p /home/dave/bin && cp ./helm /home/dave/bin/helm && export PATH=/home/dave/bin:$PATH
+  shell: mkdir -p ~/bin && cp ./helm ~/bin/helm && export PATH=~/bin:$PATH
   args:
     chdir: /usr/local/bin
     executable: /bin/bash
@@ -112,13 +93,13 @@
 - name: Download OpenEBS yml
   get_url:
     url: https://openebs.github.io/charts/openebs-operator.yml
-    dest: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yml
+    dest: /tmp/openebs-operator.yml
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
-    kubeconfig: /home/dave/rke2/rke2.yml
+    #kubeconfig: /home/dave/rke2/rke2.yml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yml
+    src: /tmp/openebs-operator.yml
 
 - name: Reboot the node
   shell: reboot

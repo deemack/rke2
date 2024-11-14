@@ -1,0 +1,7 @@
+---
+- name: Clean Node
+  hosts: minipc
+  become: true
+  gather_facts: true
+  roles:
+    - clean
