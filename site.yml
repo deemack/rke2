@@ -1,12 +1,12 @@
 ---
 - name: Clean the RKE2 Cluster Node
-  import_playbook: clean.yaml
+  import_playbook: clean.yml
   tags: [ 'never', 'clean' ]
 
 - name: Configure the RKE2 Cluster
-  import_playbook: cluster.yaml
+  import_playbook: cluster.yml
   tags: cluster
 
 - name: Configure Dashboard
-  import_playbook: dashboard.yaml
+  import_playbook: dashboard.yml
   tags: dashboard

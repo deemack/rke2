@@ -41,8 +41,8 @@
 
 - name: Copy nginx-config file
   copy:
-    src: config-nginx.yaml
-    dest: /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yaml
+    src: config-nginx.yml
+    dest: /var/lib/rancher/rke2/server/manifests/rke2-ingress-nginx-config.yml
 
 - name: install pre-requisites
   pip:
@@ -64,8 +64,8 @@
 
 - name: Copy kubeconfig
   copy:
-    src: /etc/rancher/rke2/rke2.yaml
-    dest: /home/dave/rke2/rke2.yaml
+    src: /etc/rancher/rke2/rke2.yml
+    dest: /home/dave/rke2/rke2.yml
     owner: dave
     group: dave
     mode: '400'
@@ -79,7 +79,7 @@
   become_user: dave
 
 - name: Export KUBCONFIG
-  shell: export KUBECONFIG=/home/dave/rke2/rke2.yaml
+  shell: export KUBECONFIG=/home/dave/rke2/rke2.yml
 
 - name: Append PATH to bashrc
   lineinfile:
@@ -90,7 +90,7 @@
 - name: Append KUBECONFIG to bashrc
   lineinfile:
     path: /home/dave/.bashrc
-    line: export KUBECONFIG=/home/dave/rke2/rke2.yaml
+    line: export KUBECONFIG=/home/dave/rke2/rke2.yml
     create: yes
 
 - name: Refresh bashrc
@@ -109,16 +109,16 @@
     chdir: /usr/local/bin
     executable: /bin/bash
 
-- name: Download OpenEBS yaml 
+- name: Download OpenEBS yml
   get_url:
-    url: https://openebs.github.io/charts/openebs-operator.yaml
-    dest: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml
+    url: https://openebs.github.io/charts/openebs-operator.yml
+    dest: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yml
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
-    kubeconfig: /home/dave/rke2/rke2.yaml
+    kubeconfig: /home/dave/rke2/rke2.yml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yaml
+    src: /home/dave/rke2/playbooks/roles/cluster/files/openebs-operator.yml
 
 - name: Reboot the node
-  shell: reboot 
+  shell: reboot

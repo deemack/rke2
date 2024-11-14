@@ -9,7 +9,7 @@
     name: firewalld
     state: stopped
     enabled: false
- 
+
 - name: Add Helm Repos
   kubernetes.core.helm_repository:
     name: "{{ item.name }}"
@@ -19,12 +19,12 @@
     - { name: 'jetstack', url: ' https://charts.jetstack.io' }
     - { name: 'rancher-latest', url: 'https://releases.rancher.com/server-charts/latest' }
   become: yes
-  become_user: dave  
+  become_user: dave
 
 
 - name: Deploy Cert Manager
   kubernetes.core.helm:
-    kubeconfig: /home/dave/rke2/rke2.yaml
+    kubeconfig: /home/dave/rke2/rke2.yml
     binary_path: /home/dave/bin/helm
     name: cert-manager
     chart_ref: jetstack/cert-manager
@@ -53,16 +53,16 @@
   args:
     executable: "/bin/bash"
 
-- name: Download Cert Manager yaml 
+- name: Download Cert Manager yml
   get_url:
-    url: https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
-    dest: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yaml
+    url: https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yml
+    dest: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yml
 
 - name: Apply Cert Manager Config
   kubernetes.core.k8s:
-    kubeconfig: /home/dave/rke2/rke2.yaml
+    kubeconfig: /home/dave/rke2/rke2.yml
     state: present
-    src: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yaml
+    src: /home/dave/rke2/playbooks/roles/cluster/files/cert-manager.crds.yml
 
 
 - name: Deploy Rancher
@@ -74,7 +74,7 @@
     force: true
     set_values:
       - value: hostname=cluster.local
-      - value: bootstrapPassword=password 
+      - value: bootstrapPassword=password
   become: yes
   become_user: dave
 

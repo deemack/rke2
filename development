@@ -1,0 +1,4 @@
+minipc:
+  hosts:
+    kubedev:
+      ansible_connection: local
