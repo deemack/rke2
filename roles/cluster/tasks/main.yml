@@ -136,7 +136,7 @@
 
 
 - name: Create admin ServiceAccount
-  shell: /var/lib/rancher/rke2/bin/kubectl create serviceaccount admin-user -n kube-system
+  shell: /var/lib/rancher/rke2/bin/kubectl --kubeconfig "{{ kubeconfig_path }} create serviceaccount admin-user -n kube-system
 #   register: create_sa
 #   tags: admin_user
 #   become: true
