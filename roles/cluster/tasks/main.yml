@@ -123,8 +123,8 @@
 - name: Refresh bashrc
   shell: source "{{ lookup('env', 'HOME') }}/.bashrc"
 
- - name: Create admin ServiceAccount
-   shell: kubectl create serviceaccount admin-user -n kube-system
+- name: Create admin ServiceAccount
+  shell: kubectl create serviceaccount admin-user -n kube-system
 #   register: create_sa
 #   tags: admin_user
 #   become: true
