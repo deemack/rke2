@@ -100,7 +100,7 @@
 
 
 - name: Take ownership of kubeconfig
-  shell: "chown -R {{ cluster_admin }}:{{ cluster_admin }} /etc/rancher/rke2/rke2.yaml"
+  shell: chown -R "{{ cluster_admin }}":"{{ cluster_admin }}" /etc/rancher/rke2/rke2.yaml
 
 - name: Export KUBCONFIG
   shell: export KUBECONFIG="{{ kubeconfig_path }}"
