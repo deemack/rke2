@@ -110,13 +110,13 @@
 
 - name: Append PATH to bashrc
   lineinfile:
-    path: {{ lookup('env', 'HOME') }}/.bashrc
+    path: "{{ lookup('env', 'HOME') }}"/.bashrc
     line: export PATH=$PATH:/var/lib/rancher/rke2/bin
     create: true
 
 - name: Append KUBECONFIG to bashrc
   lineinfile:
-    path: {{ lookup('env', 'HOME') }}/.bashrc
+    path: "{{ lookup('env', 'HOME') }}"/.bashrc
     line: export KUBECONFIG="{{ kubeconfig_path }}"
     create: true
 
