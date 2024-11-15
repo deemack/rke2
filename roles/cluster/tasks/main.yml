@@ -123,6 +123,17 @@
 - name: Refresh bashrc
   shell: source "{{ lookup('env', 'HOME') }}/.bashrc"
 
+- name: Create a Kubernetes user
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: new-user
+        namespace: default
+
+
 - name: Create admin ServiceAccount
   shell: kubectl create serviceaccount admin-user -n kube-system
 #   register: create_sa
