@@ -1,4 +1,7 @@
 ---
+- name: Zypper Refresh and Update
+  shell: zypper refresh && zypper update -y
+
 - name: Set a hostname
   ansible.builtin.hostname:
     name: "{{ hostname }}"
