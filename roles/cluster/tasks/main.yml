@@ -121,7 +121,7 @@
     create: true
 
 - name: Refresh bashrc
-  shell: source "{{ kubeconfig_path }}"/.bashrc
+  shell: source "{{ lookup('env', 'HOME') }}/.bashrc"
 
 # - name: Create admin ServiceAccount
 #   shell: kubectl create serviceaccount admin-user -n kube-system
