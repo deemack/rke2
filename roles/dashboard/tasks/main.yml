@@ -7,8 +7,6 @@
   loop:
     - { name: 'jetstack', url: ' https://charts.jetstack.io' }
     - { name: 'rancher-latest', url: 'https://releases.rancher.com/server-charts/latest' }
-  become: true
-  become_user: dave
 
 
 - name: Deploy Cert Manager
@@ -20,8 +18,6 @@
     chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
-  become: true
-  become_user: dave
 
 
 #- name: Install release
@@ -45,13 +41,13 @@
 - name: Download Cert Manager yml
   get_url:
     url: https://github.com/jetstack/cert-manager/releases/download/v1.7.1/cert-manager.crds.yaml
-    dest: /home/dave/rke2/roles/cluster/files/cert-manager.crds.yml
+    dest: /tmp/cert-manager.crds.yml
 
 - name: Apply Cert Manager Config
   kubernetes.core.k8s:
-    kubeconfig: /etc/rancher/rke2/rke2.yaml
+    kubeconfig: "{{ kubeconfig_path }}"
     state: present
-    src: /home/dave/rke2/roles/cluster/files/cert-manager.crds.yml
+    src: /tmp/cert-manager.crds.yml
 
 - name: Deploy Rancher
   kubernetes.core.helm:
@@ -63,6 +59,4 @@
     set_values:
       - value: hostname=cluster.local
       - value: bootstrapPassword=password
-  #become: true
-  #become_user: dave
   notify: Stop and Disable firewalld
