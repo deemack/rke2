@@ -60,6 +60,6 @@
     create_namespace: true
     force: true
     set_values:
-      - value: hostname="{{ cluster_hostname }}"
+      - value: hostname="{{ cluster_fqdn }}"
       - value: bootstrapPassword="{{ bootstrap_password }}""
   notify: Stop and Disable firewalld
