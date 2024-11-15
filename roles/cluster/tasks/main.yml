@@ -1,6 +1,9 @@
 ---
-- name: Zypper Refresh and Update
-  shell: zypper refresh && zypper update -y
+- name: Update all packages
+  community.general.zypper:
+    name: '*'
+    state: latest
+    update_cache: true
 
 - name: Set a hostname
   ansible.builtin.hostname:
