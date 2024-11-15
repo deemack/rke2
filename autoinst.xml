@@ -203,7 +203,7 @@
     </group>
     <group t="map">
       <gid>1000</gid>
-      <groupname>dave</groupname>
+      <groupname>k8sadmin</groupname>
       <userlist/>
     </group>
     <group t="map">
@@ -1030,9 +1030,9 @@ DefaultPolicy default
     <user t="map">
       <authorized_keys t="list"/>
       <encrypted t="boolean">true</encrypted>
-      <fullname>dave</fullname>
+      <fullname>k8sadmin</fullname>
       <gid>1000</gid>
-      <home>/home/dave</home>
+      <home>/home/k8sadmin</home>
       <home_btrfs_subvolume t="boolean">false</home_btrfs_subvolume>
       <password_settings t="map">
         <expire/>
@@ -1045,7 +1045,7 @@ DefaultPolicy default
       <shell>/bin/bash</shell>
       <uid>1000</uid>
       <user_password>$6$iH943NgOypyHAqpS$.mwxocR/PTEM0tnnVqjkiqj65jwZjY2poAgMdI.TsaiiyY5HPvVJIwo3NYtpLDjd9VPgn0Mv2Y/T4uFI4qHU0.</user_password>
-      <username>dave</username>
+      <username>k8sadmin</username>
     </user>
     <user t="map">
       <encrypted t="boolean">true</encrypted>

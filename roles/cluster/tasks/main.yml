@@ -57,92 +57,99 @@
     timeout: 600
   tags: cluster_sleep
 
-- name: Export PATH
-  shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
 
 
-- name: Create admin ServiceAccount
-  shell: /var/lib/rancher/rke2/bin/kubectl create serviceaccount admin-user -n kube-system
-  register: create_sa
-  tags: admin_user
-  become: true
-  become_user: root
 
-- name: Bind ServiceAccount to cluster-admin role
-  shell: kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user
-  when: create_sa.changed
-  tags: admin_user
-  become: true
-  become_user: root
 
-- name: Get admin-user token
-  shell: kubectl -n kube-system get secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}') -o jsonpath="{.data.token}" | base64 --decode
-  register: admin_token
-  tags: admin_user
-  become: true
-  become_user: root
 
-- name: Get certificate authority data
-  shell: kubectl config view --raw -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'
-  register: ca_data
-  tags: admin_user
-  become: true
-  become_user: root
+# - name: Create kubeconfig file
+#   copy:
+#     dest: "{{ lookup('env', 'HOME') }}/.kube/config"
+#     content: |
+#       apiVersion: v1
+#       clusters:
+#       - cluster:
+#           certificate-authority-data: "{{ ca_data.stdout }}"
+#           server: "{{ cluster_server }}"
+#         name: "{{ cluster_name }}"
+#       contexts:
+#       - context:
+#           cluster: "{{ cluster_name }}"
+#           user: admin-user
+#         name: admin-context
+#       current-context: admin-context
+#       kind: Config
+#       preferences: {}
+#       users:
+#       - name: admin-user
+#         user:
+#           token: "{{ admin_token.stdout }}"
+#   tags: admin_user
 
-- name: Create kubeconfig file
-  copy:
-    dest: "{{ lookup('env', 'HOME') }}/.kube/config"
-    content: |
-      apiVersion: v1
-      clusters:
-      - cluster:
-          certificate-authority-data: "{{ ca_data.stdout }}"
-          server: "{{ cluster_server }}"
-        name: "{{ cluster_name }}"
-      contexts:
-      - context:
-          cluster: "{{ cluster_name }}"
-          user: admin-user
-        name: admin-context
-      current-context: admin-context
-      kind: Config
-      preferences: {}
-      users:
-      - name: admin-user
-        user:
-          token: "{{ admin_token.stdout }}"
-  tags: admin_user
+
+
+#- name: Copy kubeconfig to 
+#  copy:
+#    src: /etc/rancher/rke2/rke2.yaml
+#    dest: ~/rke2.yaml
+#    remote_src: true
+#  become: true
+#  become_user: root
+
+
+
 
 - name: Take ownership of kubeconfig
-  shell: chown -R dave /etc/rancher/rke2/rke2.yaml
-
-- name: Copy kubeconfig
-  copy:
-    src: /etc/rancher/rke2/rke2.yaml
-    dest: ~/rke2.yaml
-    remote_src: true
-  become: true
-  become_user: root
-
-
+  shell: chown -R "{{ k8sadmin }}:{{ k8sadmin }}" /etc/rancher/rke2/rke2.yaml
 
 - name: Export KUBCONFIG
-  shell: export KUBECONFIG=~/rke2.yaml
+  shell: export KUBECONFIG="{{ kubeconfig_path }}"
+
+- name: Export PATH
+  shell: export PATH=$PATH:/var/lib/rancher/rke2/bin  
 
 - name: Append PATH to bashrc
   lineinfile:
-    path: ~/.bashrc
+    path: {{ lookup('env', 'HOME') }}/.bashrc
     line: export PATH=$PATH:/var/lib/rancher/rke2/bin
     create: true
 
 - name: Append KUBECONFIG to bashrc
   lineinfile:
-    path: ~/.bashrc
-    line: export KUBECONFIG=~/rke2.yaml
+    path: {{ lookup('env', 'HOME') }}/.bashrc
+    line: export KUBECONFIG="{{ kubeconfig_path }}"
     create: true
 
 - name: Refresh bashrc
-  shell: source ~/.bashrc
+  shell: source "{{ kubeconfig_path }}"/.bashrc
+
+# - name: Create admin ServiceAccount
+#   shell: kubectl create serviceaccount admin-user -n kube-system
+#   register: create_sa
+#   tags: admin_user
+#   become: true
+#   become_user: root
+
+# - name: Bind ServiceAccount to cluster-admin role
+#   shell: kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user
+#   when: create_sa.changed
+#   tags: admin_user
+#   become: true
+#   become_user: root
+
+# - name: Get admin-user token
+#   shell: kubectl -n kube-system get secret $(kubectl -n kube-system get secret | grep admin-user | awk '{print $1}') -o jsonpath="{.data.token}" | base64 --decode
+#   register: admin_token
+#   tags: admin_user
+#   become: true
+#   become_user: root
+
+# - name: Get certificate authority data
+#   shell: kubectl config view --raw -o jsonpath='{.clusters[0].cluster.certificate-authority-data}'
+#   register: ca_data
+#   tags: admin_user
+#   become: true
+#   become_user: root
 
 - name: Download OpenEBS yml
   get_url:
@@ -151,7 +158,7 @@
 
 - name: Install OpenEBS Local Storage Solution
   kubernetes.core.k8s:
-    kubeconfig: /etc/rancher/rke2/rke2.yaml
+    kubeconfig: "{{ kubeconfig_path }}"
     state: present
     src: /tmp/openebs-operator.yml
 
