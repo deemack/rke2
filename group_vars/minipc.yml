@@ -3,3 +3,4 @@ cluster_name: default
 cluster_admin: k8sadmin
 kubeconfig_path: /etc/rancher/rke2/rke2.yaml
 kubectl_path: /var/lib/rancher/rke2/bin/kubectl
+helm_path: /usr/local/bin/helm

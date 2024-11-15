@@ -1,6 +1,7 @@
 ---
 - name: Add Helm Repos
   kubernetes.core.helm_repository:
+    binary_path: "{{ helm_path }}"
     name: "{{ item.name }}"
     repo_url: "{{ item.url}}"
     force_update: true
@@ -11,8 +12,8 @@
 
 - name: Deploy Cert Manager
   kubernetes.core.helm:
-    kubeconfig: /etc/rancher/rke2/rke2.yaml
-    binary_path: /usr/local/bin/helm
+    kubeconfig: "{{ kubeconfig_path }}"
+    binary_path: "{{ helm_path }}"
     name: cert-manager
     chart_ref: jetstack/cert-manager
     chart_version: v1.7.1
