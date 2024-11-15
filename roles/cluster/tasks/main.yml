@@ -60,8 +60,9 @@
 - name: Export PATH
   shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
 
+
 - name: Create admin ServiceAccount
-  shell: kubectl create serviceaccount admin-user -n kube-system
+  shell: /var/lib/rancher/rke2/bin/kubectl create serviceaccount admin-user -n kube-system
   register: create_sa
   tags: admin_user
   become: true
