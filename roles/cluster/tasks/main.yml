@@ -136,11 +136,7 @@
 
 
 - name: Create admin ServiceAccount
-  shell: /var/lib/rancher/rke2/bin/kubectl --kubeconfig "{{ kubeconfig_path }}" create serviceaccount admin-user -n kube-system
-#   register: create_sa
-#   tags: admin_user
-#   become: true
-#   become_user: root
+  shell: "{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" create serviceaccount admin-user -n kube-system
 
 # - name: Bind ServiceAccount to cluster-admin role
 #   shell: kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user

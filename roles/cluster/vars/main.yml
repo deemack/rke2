@@ -1,4 +1,0 @@
-cluster_server: https://127.0.0.1:6443
-cluster_name: default
-cluster_admin: k8sadmin
-kubeconfig_path: /etc/rancher/rke2/rke2.yaml
