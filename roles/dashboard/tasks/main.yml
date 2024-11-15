@@ -19,6 +19,7 @@
     chart_version: v1.7.1
     release_namespace: cert-manager
     create_namespace: true
+    force: true
 
 
 #- name: Install release
