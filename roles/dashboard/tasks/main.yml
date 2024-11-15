@@ -52,12 +52,14 @@
 
 - name: Deploy Rancher
   kubernetes.core.helm:
+    kubeconfig: "{{ kubeconfig_path }}"
+    binary_path: "{{ helm_path }}"
     name: rancher
     chart_ref: rancher-latest/rancher
     release_namespace: cattle-system
     create_namespace: true
     force: true
     set_values:
-      - value: hostname=cluster.local
-      - value: bootstrapPassword=password
+      - value: hostname="{{ cluster_hostname }}"
+      - value: bootstrapPassword="{{ bootstrap_password }}""
   notify: Stop and Disable firewalld
