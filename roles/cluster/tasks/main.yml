@@ -135,8 +135,8 @@
         namespace: default
 
 
-- name: Create admin ServiceAccount
-  shell: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} create serviceaccount admin-user -n kube-system"
+#- name: Create admin ServiceAccount
+#  shell: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} create serviceaccount admin-user -n kube-system"
 
 # - name: Bind ServiceAccount to cluster-admin role
 #   shell: kubectl create clusterrolebinding admin-user-binding --clusterrole=cluster-admin --serviceaccount=kube-system:admin-user
