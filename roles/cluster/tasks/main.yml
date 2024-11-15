@@ -125,6 +125,7 @@
 
 - name: Create a Kubernetes user
   k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
     state: present
     definition:
       apiVersion: v1
