@@ -1,3 +1,3 @@
 ---
 - name: Import create_namespace playbook
-  ansible.builtin.import_playbook: create_namespace.yml
+  import_tasks: create_namespace.yml
