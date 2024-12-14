@@ -10,3 +10,7 @@
 - name: Configure Monitoring
   import_playbook: deploy_monitoring.yml
   tags: deploy_monitoring
+
+- name: Deploy Wordpress
+  import_playbook: deploy_wordpress.yml
+  tags: deploy_wordpress
