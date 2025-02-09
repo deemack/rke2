@@ -1,3 +1,5 @@
 ---
 - name: Import create_namespace playbook
-  import_tasks: create_namespace.yml
+  include_role:
+    name: common
+    tasks_from: create_namespace

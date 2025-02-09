@@ -94,7 +94,7 @@
 
 
 
-#- name: Copy kubeconfig to 
+#- name: Copy kubeconfig to
 #  copy:
 #    src: /etc/rancher/rke2/rke2.yaml
 #    dest: ~/rke2.yaml
@@ -112,7 +112,7 @@
   shell: export KUBECONFIG="{{ kubeconfig_path }}"
 
 - name: Export PATH
-  shell: export PATH=$PATH:/var/lib/rancher/rke2/bin  
+  shell: export PATH=$PATH:/var/lib/rancher/rke2/bin
 
 - name: Append PATH to bashrc
   lineinfile:
