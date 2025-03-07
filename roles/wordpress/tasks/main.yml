@@ -9,3 +9,7 @@
     name: common
     tasks_from: create_mount_directory
   loop: "{{ directories }}"
+
+- name: Apply Secrets
+  include_role:
+    name: secrets
