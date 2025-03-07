@@ -1,1 +1,12 @@
 namespace: wordpress
+directories:
+  mysql:
+    path: /mnt/storage/wordpress/mysql
+    mode: 0755
+    owner: nobody
+    group: nogroup
+  wordpress:
+    path: /mnt/storage/wordpress/wordpress
+    mode: 0777
+    owner: nobody
+    group: nogroup

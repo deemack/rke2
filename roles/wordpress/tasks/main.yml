@@ -3,3 +3,9 @@
   include_role:
     name: common
     tasks_from: create_namespace
+
+- name: Import create_mount_directory playbook
+  include_role:
+    name: common
+    tasks_from: create_mount_directory
+  loop: {{ directories }}
