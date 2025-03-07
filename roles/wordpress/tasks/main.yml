@@ -8,4 +8,4 @@
   include_role:
     name: common
     tasks_from: create_mount_directory
-  loop: "{{ directories|dict2items }}"
+  loop: "{{ mysql|dict2items }}"
