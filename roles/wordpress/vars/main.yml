@@ -11,5 +11,7 @@ directories:
 persistent_volumes:
   - name: mysql
     path: /mnt/storage/wordpress/mysql
+    capacity: 10Gi
   - name: wordpress
     path: /mnt/storage/wordpress/wordpress
+    capacity: 10Gi

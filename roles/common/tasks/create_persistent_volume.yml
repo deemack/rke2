@@ -7,6 +7,7 @@
   vars:
     path: "{{ item.path }}"
     name: "{{ item.name }}"
+    capacity: "{{ item.capacity }}"
 
 - name: Create Persistent Volume
   kubernetes.core.k8s:
