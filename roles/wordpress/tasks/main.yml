@@ -13,3 +13,8 @@
 - name: Apply Secrets
   include_role:
     name: secrets
+
+- name: Include create_persistent_volume playbook
+  include_role:
+    name: common
+    tasks_from: create_persistent_volume
