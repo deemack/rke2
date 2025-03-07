@@ -25,3 +25,19 @@
     name: common
     tasks_from: create_persistent_volume_claim
   loop: "{{ persistent_volume_claims }}"
+
+- name: Deploy Wordpress SQl
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: deployment_sql.yml
+
+- name: Deploy Wordpress App
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: deployment_wordpress.yml
