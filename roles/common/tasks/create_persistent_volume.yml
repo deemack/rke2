@@ -5,7 +5,7 @@
     src: create_persistent_volume.j2
     dest: /tmp/create_persistent_volume.yml
   vars:
-    path: {{ item.path }}
+    path: "{{ item.path }}"
 
 - name: Create Persistent Volume
   kubernetes.core.k8s:
