@@ -1,8 +1,8 @@
 ---
 - name: Create mount directory on Node
   ansible.builtin.file:
-    path: {{ path }}
+    path: "{{ path }}"
     state: directory
-    mode: {{ mode }}
-    owner: {{ owner }}
-    group: {{ group }}
+    mode: "{{ mode }}"
+    owner: "{{ owner }}"
+    group: "{{ group }}"
