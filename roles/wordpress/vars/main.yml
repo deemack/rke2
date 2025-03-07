@@ -8,3 +8,8 @@ directories:
     mode: '0777'
     owner: nobody
     group: nogroup
+persistent_volumes:
+  - name: mysql
+    path: /mnt/storage/wordpress/mysql
+  - name: wordpress
+    path: /mnt/storage/wordpress/wordpress

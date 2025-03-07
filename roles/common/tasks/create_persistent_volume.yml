@@ -1,0 +1,14 @@
+---
+- name: Create Persistent Volume yaml
+  become: true
+  template:
+    src: create_persistent_volume.j2
+    dest: /tmp/create_persistent_volume.yml
+
+- name: Create Persistent Volume
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: /tmp/create_persistent_volume.yml
