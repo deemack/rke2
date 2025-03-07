@@ -6,6 +6,7 @@
     dest: /tmp/create_persistent_volume.yml
   vars:
     path: "{{ item.path }}"
+    name: "{{ item.name }}"
 
 - name: Create Persistent Volume
   kubernetes.core.k8s:
