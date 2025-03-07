@@ -1,11 +1,11 @@
 ---
-- name: Import create_namespace playbook
+- name: Include create_namespace playbook
   include_role:
     name: common
     tasks_from: create_namespace
 
-- name: Import create_mount_directory playbook
+- name: Include create_mount_directory playbook
   include_role:
     name: common
     tasks_from: create_mount_directory
-  loop: "{{ directories|flatten(levels=1) }}"
+  with_dict: "{{ directoies }}"
