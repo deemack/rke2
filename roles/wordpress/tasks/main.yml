@@ -18,3 +18,4 @@
   include_role:
     name: common
     tasks_from: create_persistent_volume
+  loop: "{{ persistent_volumes }}"
