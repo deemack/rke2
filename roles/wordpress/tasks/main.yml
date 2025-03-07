@@ -19,3 +19,9 @@
     name: common
     tasks_from: create_persistent_volume
   loop: "{{ persistent_volumes }}"
+
+- name: Include create_persistent_volume_claim playbook
+  include_role:
+    name: common
+    tasks_from: create_persistent_volume_claim
+  loop: "{{ persistent_volume_claims }}"

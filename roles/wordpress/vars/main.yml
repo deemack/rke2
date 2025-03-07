@@ -15,3 +15,8 @@ persistent_volumes:
   - name: wordpress
     path: /mnt/storage/wordpress/wordpress
     capacity: 10Gi
+persistent_volume_claims:
+  - name: mysql-pv-claim
+    storage: 5Gi
+  - name: wordpress-pv-claim
+    storage: 5Gi

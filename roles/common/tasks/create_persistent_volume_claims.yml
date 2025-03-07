@@ -1,0 +1,17 @@
+---
+- name: Create Persistent Volume Claim yaml
+  become: true
+  template:
+    src: create_persistent_volume_claim.j2
+    dest: /tmp/create_persistent_volume_claim.yml
+  vars:
+    name: "{{ item.name }}"
+    storage: "{{ item.storage }}"
+
+- name: Create Persistent Volume Claim
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: /tmp/create_persistent_volume_claim.yml
