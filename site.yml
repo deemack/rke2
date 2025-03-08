@@ -14,3 +14,7 @@
 - name: Deploy Wordpress
   import_playbook: deploy_wordpress.yml
   tags: deploy_wordpress
+
+- name: Deploy Homepage
+  import_playbook: deploy_homepage.yml
+  tags: deploy_homepage
