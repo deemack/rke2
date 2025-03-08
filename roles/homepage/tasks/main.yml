@@ -1,0 +1,48 @@
+---
+- name: Include create_namespace playbook
+  include_role:
+    name: common
+    tasks_from: create_namespace
+
+- name: Fetch IP address of Host
+  vars:
+    command: "hostname -I | awk '{print $1}'"
+  shell: "{{ command }}"
+  register: host_ip
+
+- name: Host IP
+  debug:
+    var: host_ip.stdout
+
+- name: Create configMap from template
+  become: true
+  template:
+    src: configmap_homepage.j2
+    dest: /tmp/configmap_homepage.yml
+
+- name: Apply  configMap
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    state: present
+    namespace: "{{ namespace}}"
+    src: /tmp/configmap_homepage.yml
+
+- name: Create deployment
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    state: present
+    namespace: "{{ namespace}}"
+    src: /tmp/deployment_homepage.yml
+
+- name: Create service from template
+  become: true
+  template:
+    src: service.j2
+    dest: /tmp/service_homepage.yml
+
+- name: Create service
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    state: present
+    namespace: "{{ namespace}}"
+    src: /tmp/service_homepage.yml
