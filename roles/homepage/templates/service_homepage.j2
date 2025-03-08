@@ -6,7 +6,7 @@ spec:
   selector:
     app: nginx
   type: LoadBalancer
-  loadBalancerIP: {{ host_ip.stdout | ansible.netcommon.ipmath(1) }}
+  loadBalancerIP: {{ host_ip.stdout | ansible.utils.ipmath(1) }}
   ports:
   - name: http
     port: 80
