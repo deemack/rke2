@@ -32,7 +32,7 @@
     kubeconfig: "{{ kubeconfig_path }}"
     state: present
     namespace: "{{ namespace}}"
-    src: /tmp/deployment_homepage.yml
+    src: deployment_homepage.yml
 
 - name: Create service from template
   become: true
