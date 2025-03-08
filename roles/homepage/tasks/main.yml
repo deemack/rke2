@@ -37,7 +37,7 @@
 - name: Create service from template
   become: true
   template:
-    src: service.j2
+    src: service_homepage.j2
     dest: /tmp/service_homepage.yml
 
 - name: Create service
