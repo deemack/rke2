@@ -33,3 +33,9 @@
     kubeconfig: "{{ kubeconfig_path }}"
     state: present
     src: /tmp/ipaddresspool_metallb.yml
+
+- name: Apply MetalLB L2Advertisement
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    state: present
+    src: l2advertisement_metallb.yml
