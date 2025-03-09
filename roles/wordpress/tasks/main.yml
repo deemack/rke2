@@ -10,10 +10,6 @@
     tasks_from: create_mount_directory
   loop: "{{ directories }}"
 
-- name: Apply Secrets
-  include_role:
-    name: secrets
-
 - name: Include create_persistent_volume playbook
   include_role:
     name: common
