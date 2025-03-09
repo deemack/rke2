@@ -24,6 +24,7 @@
 
 - name: Get metallb pod information
   k8s_info:
+    kubeconfig: "{{ kubeconfig_path }}"
     kind: Pod
     name: "controller"
     namespace: "metallb-system"
