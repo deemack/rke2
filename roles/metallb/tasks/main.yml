@@ -10,10 +10,6 @@
     kubeconfig: "{{ kubeconfig_path }}"
     state: present
     src: /tmp/metallb-native.yml
-    wait: yes
-    wait_condition:
-      type: Complete
-      status: "True"
   tags: metalLB
 
 - name: Create MetalLB IPAddressPool from template
