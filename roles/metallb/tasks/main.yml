@@ -20,11 +20,22 @@
     kubeconfig: "{{ kubeconfig_path }}"
     state: present
     src: /tmp/metallb-native.yml
-    wait: yes
-    wait_condition:
-      type: Complete
-      status: "True"
   tags: metalLB
+
+- name: Get metallb pod information
+  k8s_info:
+    kind: Pod
+    name: "controller"
+    namespace: "metallb-system"
+  register: pod_info
+
+- name: Check if pod is running
+  set_fact:
+    pod_running: "{{ pod_info.items[0].status.phase == 'Running' }}"
+
+- name: Display pod status
+  debug:
+    msg: "Pod is running: {{ pod_running }}"
 
 - name: Create MetalLB IPAddressPool from template
   become: true
