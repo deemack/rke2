@@ -4,7 +4,6 @@ kind: ConfigMap
 metadata:
   name: configmap-deployment
 data:
-  index.html: |
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -33,7 +32,7 @@ data:
     nav {
       float: left;
       width: 50%;
-      height: 350px; /* only for demonstration, should be removed */
+      height: 500px; /* only for demonstration, should be removed */
       background: #7cc;
       padding: 20px;
     }
@@ -53,9 +52,9 @@ data:
 
     article {
       float: left;
-      padding: 50px;
+      padding: 20px;
       width: 100%;
-      background-color: #2977bd;
+      background-color: #f1f1f1;
       height: 300px; /* only for demonstration, should be removed */
       font-size: 25px;
     }
@@ -83,12 +82,12 @@ data:
       }
     }
     </style>
-
     </head>
     <body>
     <header>
       <h2>Welcome Home</h2>
     </header>
+
     <section>
       <nav>
         <ul>
@@ -96,6 +95,7 @@ data:
           <li><a href="http://{{ host_ip.stdout }}:30336/chores" target="_blank">Chores</a></li>
         </ul>
       </nav>
+
       <nav>
         <ul>
           <h4>Tools</h4>
@@ -104,6 +104,7 @@ data:
           <li><a href="http://{{ host_ip.stdout }}:30338" target="_blank">Nexus</a></li>
           <li><a href="http://{{ host_ip.stdout }}:30337" target="_blank">Handbrake</a></li>
         </ul>
+      </nav>
       <nav>
         <ul>
           <h4>Wikis</h4>
@@ -111,6 +112,7 @@ data:
           <li><a href="http://{{ host_ip.stdout }}:30332" target="_blank">Wordpress</a></li>
         </ul>
       </nav>
+
       <nav>
         <ul>
           <h4>Admin</h4>
@@ -118,7 +120,8 @@ data:
           <li><a href="http://192.168.1.71/admin" target="_blank">Pi-hole</a></li>
         </ul>
       </nav>
-      <article>
+
+        <article>
         <h1>Word of the day!</h1>
         <p>
           <script src="https://wordsmith.org/words/word3.js" type="text/javascript"></script
