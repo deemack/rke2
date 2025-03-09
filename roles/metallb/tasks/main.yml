@@ -1,0 +1,32 @@
+- name: Download metalLB manifest
+  get_url:
+    url: https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
+    dest: /tmp/metallb-native.yml
+    mode: '0664'
+  tags: metalLB
+
+- name: Apply metalLB manifest to the cluster.
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    state: present
+    src: /tmp/metallb-native.yml
+  tags: metalLB
+
+- name: Wait for MetalLB to come online
+  shell: kubectl get pods -n metallb-system -o json
+  register: kubectl_get_pod
+  until: kubectl_get_pod.stdout|from_json|json_query('items[*].status.phase')|unique == ["Running"]
+  retries: 20
+  delay: 15
+
+- name: Create MetalLB IPAddressPool from template
+  become: true
+  template:
+    src: ipaddresspool_metallb.j2
+    dest: /tmp/ipaddresspool_metallb.yml
+
+- name: Apply MetalLB IPAddressPool
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    state: present
+    src: /tmp/ipaddresspool_metallb.yml

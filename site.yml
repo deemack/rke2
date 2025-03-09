@@ -7,6 +7,10 @@
   import_playbook: create_cluster.yml
   tags: create_cluster
 
+- name: Deploy metalLB
+  import_playbook: deploy_metallb.yml
+  tags: deploy_metallb
+
 - name: Configure Monitoring
   import_playbook: deploy_monitoring.yml
   tags: deploy_monitoring

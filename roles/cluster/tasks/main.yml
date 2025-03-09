@@ -165,17 +165,16 @@
 #   become: true
 #   become_user: root
 
-- name: Download OpenEBS yml
+- name: Download OpenEBS manifest
   get_url:
     url: https://openebs.github.io/charts/openebs-operator.yaml
     dest: /tmp/openebs-operator.yml
 
-- name: Install OpenEBS Local Storage Solution
+- name: Apply OpenEBS Local Storage Solution
   kubernetes.core.k8s:
     kubeconfig: "{{ kubeconfig_path }}"
     state: present
     src: /tmp/openebs-operator.yml
-
 
 #- name: Reboot the node
 #  shell: reboot
