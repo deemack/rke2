@@ -10,14 +10,11 @@
     kubeconfig: "{{ kubeconfig_path }}"
     state: present
     src: /tmp/metallb-native.yml
+    wait: yes
+    wait_condition:
+      type: Complete
+      status: "True"
   tags: metalLB
-
-- name: Wait for MetalLB to come online
-  shell: kubectl get pods -n metallb-system -o json
-  register: kubectl_get_pod
-  until: kubectl_get_pod.stdout|from_json|json_query('items[*].status.phase')|unique == ["Running"]
-  retries: 20
-  delay: 15
 
 - name: Create MetalLB IPAddressPool from template
   become: true
