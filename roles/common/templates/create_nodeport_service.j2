@@ -11,6 +11,6 @@ spec:
       protocol: TCP
       port: {{ port }}
       targetPort: {{ targetport }}
-      nodePort: {{ nodeports | selectattr('application', 'match', '{{ name }}',) | map(attribute='port') | first }}
+      nodePort: {{ nodeport }}
   selector:
     app: "{{ app }}"
