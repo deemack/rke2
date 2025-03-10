@@ -109,6 +109,7 @@ data:
       <nav>
         <ul>
           <h4>Wikis</h4>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'xwiki') | map(attribute='port') | first }}" target="_blank">Xwiki</a></li>
           <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'wiki') | map(attribute='port') | first }}" target="_blank">Wiki</a></li>
           <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'wordpress') | map(attribute='port') | first }}" target="_blank">Wordpress</a></li>
         </ul>
