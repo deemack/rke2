@@ -37,3 +37,9 @@
     api_version: v1
     state: present
     src: deployment_wordpress.yml
+
+- name: Include create_nodeport_service playbook
+  include_role:
+    name: common
+    tasks_from: create_nodeport_service
+  loop: "{{ network }}"

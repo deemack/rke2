@@ -20,3 +20,9 @@ persistent_volume_claims:
     storage: 5Gi
   - name: wordpress-pv-claim
     storage: 5Gi
+network:
+  - name: wordpress
+    app: wordpress
+    port: 80
+    targetPort: 80
+    nodePort: 30051
