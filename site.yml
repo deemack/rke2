@@ -1,8 +1,11 @@
 ---
+
 - name: Debug Print Variables
-  debug:
-    msg: nodeports | selectattr("application", "match", "chores") | map(attribute="port")
-  tags: debug
+  hosts: minipc
+  tasks:
+   - debug:
+      msg: nodeports | selectattr("application", "match", "chores") | map(attribute="port")
+     tags: debug
 
 - name: Clean the RKE2 Cluster Node
   import_playbook: clean_system.yml
