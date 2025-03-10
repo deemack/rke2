@@ -10,7 +10,7 @@ spec:
     - name: http
       protocol: TCP
       port: "{{ port }}"
-      targetPort: "{{ targetPort }}"
+      targetPort: "{{ targetport }}"
       nodePort: "{{ nodeports | selectattr('application', 'match', 'homepage',) | map(attribute='port') | first }}"
   selector:
     app: "{{ app }}"
