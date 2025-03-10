@@ -6,3 +6,25 @@ kubectl_path: /var/lib/rancher/rke2/bin/kubectl
 helm_path: /usr/local/bin/helm
 cluster_fqdn: cluster.local
 bootstrap_password: password
+
+nodeports:
+  - application: xwiki
+    port: 30050
+  - application: wordpress
+    port: 30051
+  - application: wikijs
+    port: 30052
+  - application: utorrent
+    port: 30053
+  - application: handbrake
+    port: 30054
+  - application: nexus
+    port: 30055
+  - application: database
+    port: 30056
+  - application: jenkins
+    port: 30057
+  - application: chores
+    port: 30058
+  - application: drawio
+    port: 30059
