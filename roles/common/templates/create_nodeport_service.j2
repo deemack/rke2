@@ -3,14 +3,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: "{{ name}}"
-  namespace: "{{ namespace }}"
+  namespace: {{ namespace }}
 spec:
   type: NodePort
   ports:
     - name: http
       protocol: TCP
-      port: "{{ port }}"
-      targetPort: "{{ targetport }}"
-      nodePort: "{{ nodeports | selectattr('application', 'match', 'homepage',) | map(attribute='port') | first }}"
+      port: {{ port }}
+      targetPort: {{ targetport }}
+      nodePort: {{ nodeports | selectattr('application', 'match', 'homepage',) | map(attribute='port') | first }}
   selector:
     app: "{{ app }}"
