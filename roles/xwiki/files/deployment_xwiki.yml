@@ -40,17 +40,17 @@ spec:
           - name: DB_NAME
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
+                name: xwiki-secret
                 key: DB_NAME # value: "xwiki"  # Replace with your PostgreSQL database name
           - name: DB_USER
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
+                name: xwiki-secret
                 key: DB_USER # value: "xwiki"  # Replace with your PostgreSQL username
           - name: DB_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
+                name: xwiki-secret
                 key: DB_PASSWORD # value: "xwiki"  # Replace with your PostgreSQL password
         ports:
         - containerPort: 8080

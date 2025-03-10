@@ -32,17 +32,17 @@ spec:
           - name: POSTGRES_DB
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
+                name: xwiki-postgres-secret
                 key: POSTGRES_DB # value: "xwiki"  # Replace with your PostgreSQL database name
           - name: POSTGRES_USER
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
+                name: xwiki-postgres-secret
                 key: POSTGRES_USER # value: "xwiki"  # Replace with your PostgreSQL username
           - name: POSTGRES_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: postgres-secret
+                name: xwiki-postgres-secret
                 key: POSTGRES_PASSWORD # value: "xwiki"  # Replace with your PostgreSQL password
         ports:
         - containerPort: 5432
