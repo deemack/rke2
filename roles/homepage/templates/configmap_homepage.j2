@@ -93,24 +93,24 @@ data:
       <nav>
         <ul>
           <h4>Apps</h4>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'chores') | map(attribute='port') }}/chores" target="_blank">Chores</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'chores') | map(attribute='port') | first }}/chores" target="_blank">Chores</a></li>
         </ul>
       </nav>
 
       <nav>
         <ul>
           <h4>Tools</h4>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'jenkins') | map(attribute='port') }}" target="_blank">Jenkins</a></li>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'utorrent') | map(attribute='port') }}/gui" target="_blank">uTorrent</a></li>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'nexus') | map(attribute='port') }}" target="_blank">Nexus</a></li>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'handbrake') | map(attribute='port') }}" target="_blank">Handbrake</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'jenkins') | map(attribute='port') | first }}" target="_blank">Jenkins</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'utorrent') | map(attribute='port') | first }}/gui" target="_blank">uTorrent</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'nexus') | map(attribute='port') | first }}" target="_blank">Nexus</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'handbrake') | map(attribute='port') | first }}" target="_blank">Handbrake</a></li>
         </ul>
       </nav>
       <nav>
         <ul>
           <h4>Wikis</h4>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'wiki') | map(attribute='port') }}" target="_blank">Wiki</a></li>
-          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'wordpress') | map(attribute='port') }}" target="_blank">Wordpress</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'wiki') | map(attribute='port') | first }}" target="_blank">Wiki</a></li>
+          <li><a href="http://{{ host_ip.stdout }}:{{ nodeports | selectattr('application', 'match', 'wordpress') | map(attribute='port') | first }}" target="_blank">Wordpress</a></li>
         </ul>
       </nav>
 
