@@ -1,0 +1,39 @@
+---
+- name: Include create_namespace playbook
+  include_role:
+    name: common
+    tasks_from: create_namespace
+
+- name: Include create_mount_directory playbook
+  include_role:
+    name: common
+    tasks_from: create_mount_directory
+  loop: "{{ directories }}"
+
+- name: Include create_persistent_volume playbook
+  include_role:
+    name: common
+    tasks_from: create_persistent_volume
+  loop: "{{ persistent_volumes }}"
+
+- name: Include create_persistent_volume_claim playbook
+  include_role:
+    name: common
+    tasks_from: create_persistent_volume_claim
+  loop: "{{ persistent_volume_claims }}"
+
+- name: Deploy xwiki database
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: deployment_postgres.yml
+
+- name: Deploy xwiki App
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: deployment_xwiki.yml

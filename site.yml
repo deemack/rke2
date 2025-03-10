@@ -22,3 +22,7 @@
 - name: Deploy Homepage
   import_playbook: deploy_homepage.yml
   tags: deploy_homepage
+
+- name: Deploy xwiki
+  import_playbook: deploy_xwiki.yml
+  tags: deploy_xwiki

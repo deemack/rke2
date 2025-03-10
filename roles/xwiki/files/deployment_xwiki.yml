@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: xwiki-service
+spec:
+  type: NodePort # Change to LoadBalancer is your infrastructure supports it
+  selector:
+    app: xwiki
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+    nodePort: 30050  # Assign a specific NodePort number, e.g., 31000
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: xwiki
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: xwiki
+  template:
+    metadata:
+      labels:
+        app: xwiki
+    spec:
+      containers:
+      - name: xwiki
+        image: xwiki:stable-postgres-tomcat
+        env:
+          - name: DB_TYPE
+            value: "postgresql"
+          - name: DB_HOST
+            value: "xwiki-postgres"  # Replace with your PostgreSQL host
+          - name: DB_PORT
+            value: "5432"
+          - name: DB_NAME
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: DB_NAME # value: "xwiki"  # Replace with your PostgreSQL database name
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: DB_USER # value: "xwiki"  # Replace with your PostgreSQL username
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: postgres-secret
+                key: DB_PASSWORD # value: "xwiki"  # Replace with your PostgreSQL password
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: xwiki-pv-claim
+          mountPath: /var/xwiki/data
+      volumes:
+      - name: xwiki-pv-claim
+        persistentVolumeClaim:
+          claimName: xwiki-pv-claim

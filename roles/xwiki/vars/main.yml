@@ -1,0 +1,22 @@
+namespace: xwiki
+directories:
+  - path: /mnt/storage/xwiki/postgres
+    mode: '0755'
+    owner: nobody
+    group: nogroup
+  - path: /mnt/storage/xwiki/xwiki
+    mode: '0777'
+    owner: nobody
+    group: nogroup
+persistent_volumes:
+  - name: postgres
+    path: /mnt/storage/xwiki/postgres
+    capacity: 10Gi
+  - name: xwiki
+    path: /mnt/storage/xwiki/xwiki
+    capacity: 10Gi
+persistent_volume_claims:
+  - name: postgres-pv-claim
+    storage: 10Gi
+  - name: xwiki-pv-claim
+    storage: 10Gi
