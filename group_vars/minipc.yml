@@ -28,3 +28,5 @@ nodeports:
     port: 30058
   - application: drawio
     port: 30059
+  - application: homepage
+    port: 30060
