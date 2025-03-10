@@ -11,7 +11,7 @@ spec:
       protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: "{{ nodeports }}" | selectattr('application', 'match', 'wordpress') | map(attribute='port') | first
+      nodePort: "{{ (nodeports | selectattr('application', 'match', 'wordpress') | map(attribute='port') | first) | int }}"
   selector:
     app: "wordpress"
 ---
