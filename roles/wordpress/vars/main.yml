@@ -25,4 +25,3 @@ network:
     app: wordpress
     port: 80
     targetport: 80
-    nodeport: 30051
