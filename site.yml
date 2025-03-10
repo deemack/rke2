@@ -4,7 +4,7 @@
   hosts: minipc
   tasks:
    - debug:
-      msg: nodeports | selectattr("application", "match", "chores") | map(attribute="port")
+      msg: "{{ nodeports | selectattr('application', 'match', 'chores') | map(attribute='port') }}"
      tags: debug
 
 - name: Clean the RKE2 Cluster Node
