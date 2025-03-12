@@ -1,9 +1,9 @@
 ---
-- name: Create NodePort Service yaml
+- name: Create Service yaml
   become: true
   template:
-    src: create_nodeport_service.j2
-    dest: /tmp/create_nodeport_service.yml
+    src: create_service.j2
+    dest: /tmp/create_service.yml
   vars:
     type: "{{ item.type }}"
     name: "{{ item.name }}"
@@ -14,10 +14,10 @@
     #nodeport: "{{ item.nodeport }}"
     nodeport: "{{ nodeports | selectattr('application', 'match', item.name) | map(attribute='port') | first }}"
 
-- name: Create NodePort Service
+- name: Create Service
   kubernetes.core.k8s:
     kubeconfig: "{{ kubeconfig_path }}"
     namespace: "{{ namespace }}"
     api_version: v1
     state: present
-    src: /tmp/create_nodeport_service.yml
+    src: /tmp/create_service.yml

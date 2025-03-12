@@ -37,3 +37,9 @@
     api_version: v1
     state: present
     src: deployment_xwiki.yml
+
+- name: Include create_service playbook
+  include_role:
+    name: common
+    tasks_from: create_service
+  loop: "{{ network }}"

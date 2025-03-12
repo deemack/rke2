@@ -38,8 +38,8 @@
     state: present
     src: deployment_wordpress.yml
 
-- name: Include create_nodeport_service playbook
+- name: Include create_service playbook
   include_role:
     name: common
-    tasks_from: create_nodeport_service
+    tasks_from: create_service
   loop: "{{ network }}"
