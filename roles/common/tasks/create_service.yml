@@ -12,7 +12,7 @@
     port: "{{ item.port }}"
     targetport: "{{ item.targetport }}"
     #nodeport: "{{ item.nodeport }}"
-    nodeport: "{{ nodeports | selectattr('application', 'match', item.name) | map(attribute='port') | first }} | default('')"
+    nodeport: "{{ nodeports | selectattr('application', 'match', item.name) | map(attribute='port') | first | default(omit) }}"
 
 - name: Create Service
   kubernetes.core.k8s:
