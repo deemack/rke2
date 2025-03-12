@@ -8,7 +8,7 @@ cluster_fqdn: cluster.local
 bootstrap_password: password
 
 nodeports:
-  - application: xwiki
+  - application: xwiki-service
     port: 30050
   - application: wordpress
     port: 30051
