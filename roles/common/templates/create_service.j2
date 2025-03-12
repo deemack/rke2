@@ -11,6 +11,8 @@ spec:
       protocol: TCP
       port: {{ port }}
       targetPort: {{ targetport }}
+{% if nodeport is defined %}
       nodePort: {{ nodeport }}
+{% endif %}
   selector:
     app: "{{ app }}"
