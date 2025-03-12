@@ -5,8 +5,10 @@
     src: create_nodeport_service.j2
     dest: /tmp/create_nodeport_service.yml
   vars:
+    type: "{{ item.type }}"
     name: "{{ item.name }}"
     app: "{{ item.app }}"
+    traffic: "{{ item.traffic }}"
     port: "{{ item.port }}"
     targetport: "{{ item.targetport }}"
     #nodeport: "{{ item.nodeport }}"

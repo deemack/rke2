@@ -23,5 +23,6 @@ persistent_volume_claims:
 network:
   - name: wordpress
     app: wordpress
+    traffic: http
     port: 80
     targetport: 80

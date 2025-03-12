@@ -20,3 +20,16 @@ persistent_volume_claims:
     storage: 10Gi
   - name: xwiki-pv-claim
     storage: 10Gi
+network:
+  - type: NodePort
+    name: xwiki-service
+    app: xwiki
+    traffic: http
+    port: 8080
+    targetport: 8080
+  - type: ClusterIP
+    name: xwiki-postgres
+    app: xwiki-postgres
+    traffic: database
+    port: 5432
+    targetport: 5432
