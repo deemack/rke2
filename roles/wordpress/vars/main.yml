@@ -28,7 +28,7 @@ network:
     port: 80
     targetport: 80
   - type: ClusterIP
-    name: wordpress-mysql
+    name: mysql
     app: mysql
     traffic: database
     port: 3306
