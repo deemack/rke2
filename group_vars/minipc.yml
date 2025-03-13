@@ -10,7 +10,7 @@ bootstrap_password: password
 nodeports:
   - application: xwiki-service
     port: 30050
-  - application: wordpress
+  - application: wordpress-service
     port: 30051
   - application: wikijs
     port: 30052
