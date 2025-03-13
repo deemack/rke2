@@ -21,8 +21,15 @@ persistent_volume_claims:
   - name: wordpress-pv-claim
     storage: 5Gi
 network:
-  - name: wordpress
+  - type: NodePort
+    name: wordpress-service
     app: wordpress
     traffic: http
     port: 80
     targetport: 80
+  - type: ClusterIP
+    name: wordpress-mysql
+    app: mysql
+    traffic: database
+    port: 3306
+    targetport: 3306
