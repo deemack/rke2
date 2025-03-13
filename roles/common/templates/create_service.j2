@@ -7,7 +7,7 @@ metadata:
 spec:
   type: "{{ type }}"
   ports:
-    - name: "{{ traffic }}"
+    - name: "{{ port_name }}"
       protocol: TCP
       port: {{ port }}
       targetPort: {{ targetport }}

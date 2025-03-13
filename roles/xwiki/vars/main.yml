@@ -24,12 +24,12 @@ network:
   - type: NodePort
     name: xwiki-service
     app: xwiki
-    traffic: http
+    port_name: http
     port: 8080
     targetport: 8080
   - type: ClusterIP
     name: xwiki-postgres
     app: xwiki-postgres
-    traffic: database
+    port_name: database
     port: 5432
     targetport: 5432

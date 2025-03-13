@@ -8,7 +8,7 @@
     type: "{{ item.type }}"
     name: "{{ item.name }}"
     app: "{{ item.app }}"
-    traffic: "{{ item.traffic }}"
+    port_name: "{{ item.port_name }}"
     port: "{{ item.port }}"
     targetport: "{{ item.targetport }}"
     #nodeport: "{{ item.nodeport }}"

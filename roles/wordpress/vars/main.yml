@@ -24,12 +24,12 @@ network:
   - type: NodePort
     name: wordpress-service
     app: wordpress
-    traffic: http
+    port_name: http
     port: 80
     targetport: 80
   - type: ClusterIP
     name: mysql
     app: mysql
-    traffic: database
+    port_name: database
     port: 3306
     targetport: 3306
