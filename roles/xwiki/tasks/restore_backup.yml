@@ -31,15 +31,8 @@
 
 - name: Wait for xwiki pod to become ready again
   command:
-    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s'
+    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --sort-by=.metadata.creationTimestamp --timeout=600s'
   register: xwiki_pod_ready
 
 - debug: var=xwiki_pod_ready.stdout_lines
 
-- name: Get xwiki database pod name
-  command:
-    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" get pods -n xwiki -l=app=xwiki-postgres --sort-by=.metadata.creationTimestamp -o jsonpath="{.items[0].metadata.name}" --no-headers
-  register: pod_pgsql
-
-- debug:
-    msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
