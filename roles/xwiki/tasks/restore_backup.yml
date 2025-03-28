@@ -47,7 +47,7 @@
     kubeconfig: "{{ kubeconfig_path }}"
     namespace: xwiki
     pod: "{{ pod_pgsql.stdout }}"
-    container: xwiki-postgres
+    #container: xwiki-postgres
     command: dropdb -U xwiki xwiki -f
 
 - name: Create xwiki database
