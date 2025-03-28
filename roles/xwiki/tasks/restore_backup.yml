@@ -44,6 +44,7 @@
   command:
     cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" get pods -n xwiki -l=app=xwiki-postgres --sort-by=.metadata.creationTimestamp -o jsonpath={.items[0].metadata.name} --no-headers'
   register: pod_pgsql
+  tags: get_backup
 
 - debug:
     msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
