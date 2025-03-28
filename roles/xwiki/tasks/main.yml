@@ -48,7 +48,7 @@
   become: true
   find:
     paths: /mnt/storage/xwiki/backup
-    file_type: all
+    file_type: any
   register: backup
 
 - name: Restore from backup when avaiable
