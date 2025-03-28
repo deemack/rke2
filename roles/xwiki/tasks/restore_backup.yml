@@ -1,3 +1,4 @@
+---
 - name: Wait for xwiki pod to become ready
   command:
     cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s'
