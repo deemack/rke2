@@ -71,7 +71,7 @@
     namespace: xwiki
     pod: "{{ pod_pgsql.stdout }}"
     container: xwiki-postgres
-    command: ls -u "/var/lib/postgresql/data/*xwikibackup*"
+    command: ls -u /var/lib/postgresql/data/*xwikibackup*
   register: backup_postgres
 
 - debug:
