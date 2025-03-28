@@ -77,6 +77,7 @@
     container: xwiki-postgres
     command: ls -u /var/lib/postgresql/data/*xwikibackup*
   register: backup_postgres
+  tags: get_backup
 
 - debug:
     msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
