@@ -34,19 +34,19 @@
 
 - debug: var=xwiki_pod_ready.stdout_lines
 
-- name: Get xwiki database pod name
+- name: Get xwiki database pod name again
   command:
     cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name"'
-  register: pod_pgsql
+  register: pod_pgsql2
 
 - debug:
-    msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
+    msg: xwiki db pod is "{{ pod_pgsql2.stdout }}"
 
 - name: Drop xwiki database
   kubernetes.core.k8s_exec:
     kubeconfig: "{{ kubeconfig_path }}"
     namespace: xwiki
-    pod: "{{ pod_pgsql.stdout }}"
+    pod: "{{ pod_pgsql2.stdout }}"
     #container: xwiki-postgres
     command: dropdb -U xwiki xwiki -f
 
