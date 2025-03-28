@@ -1,5 +1,5 @@
 - name: Wait for xwiki pod to become ready
-  shell: "kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki=postgres --timeout=600s"
+  shell: "kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s"
   register: xwiki_pod_ready
 
 - debug: var=xwiki_pod_ready.stdout_lines
@@ -27,7 +27,7 @@
     cmd: kubectl rollout restart -n xwiki deployment/xwiki-postgres
 
 - name: Wait for xwiki pod to become ready
-  shell: "kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki=postgres --timeout=600s"
+  shell: "kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s"
   register: xwiki_pod_ready
 
 - debug: var=xwiki_pod_ready.stdout_lines
