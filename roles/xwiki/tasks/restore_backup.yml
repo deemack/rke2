@@ -24,3 +24,7 @@
     src: "{{ latest_file.path }}"
     dest: /mnt/storage/xwiki/postgres/
     remote_src: true
+
+- name: Restart xwiki pgsql deployment
+  command:
+    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" rollout restart -n xwiki deployment/xwiki-postgres'
