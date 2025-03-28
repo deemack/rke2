@@ -7,3 +7,20 @@
 
 - debug: var=xwiki_pod_ready.stdout_lines
 
+- name: Get xwiki backups
+  find:
+    paths: "/mnt/storage/xwiki/backup/"
+  register: found_files
+
+- name: Get latest backup file
+  set_fact:
+    latest_file: "{{ found_files.files | sort(attribute='mtime',reverse=true) | first }}"
+
+- debug:
+    msg: latest backup file is "{{ latest_file.path }}"
+
+- name: Copy latest xwiki database backup file to postgres pod
+  copy:
+    src: "{{ latest_file.path }}"
+    dest: /mnt/storage/xwiki/postgres/
+    remote_src: true

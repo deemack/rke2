@@ -63,7 +63,7 @@
 - name: Copy xwiki backup script to Host
   become: true
   copy:
-    src: backup.sh
+    src: xwiki_backup.sh
     dest: /usr/sbin/
     owner: root
     group: root
