@@ -60,7 +60,7 @@
 
 - name: Get xwiki database latest backup
   command:
-    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" exec -it -n xwiki "{{ pod_pgsql.stdout }}" -- /bin/bash -c "ls -u /var/lib/postgresql/data/*xwikibackup* | head -1"'
+    cmd: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} exec -it -n xwiki {{ pod_pgsql.stdout }} -- /bin/bash -c "ls -u /var/lib/postgresql/data/*xwikibackup* | head -1""'
   register: backup_postgres
 
 - debug:
