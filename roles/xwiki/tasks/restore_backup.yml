@@ -38,7 +38,7 @@
 
 - name: Get xwiki database pod name
   command:
-    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" get pods -n xwiki -l=app=xwiki-postgres --sort-by=.metadata.creationTimestamp -o jsonpath="{.items[0].metadata.name}" --no-headers
+    cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" get pods -n xwiki -l=app=xwiki-postgres --sort-by=.metadata.creationTimestamp -o jsonpath='{.items[0].metadata.name}' --no-headers
   register: pod_pgsql
 
 - debug:
