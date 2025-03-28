@@ -27,7 +27,7 @@
   command:
     cmd: kubectl rollout restart -n xwiki deployment/xwiki-postgres
 
-- name: Wait for xwiki pod to become ready
+- name: Wait for xwiki pod to become ready again
   command:
     cmd: kubectl wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s
   register: xwiki_pod_ready
