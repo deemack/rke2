@@ -1,9 +1,8 @@
-- name: Wait for xwiki pods to come online
-  shell: kubectl get pods -n xwiki -o json
-  register: kubectl_get_pod
-  until: kubectl_get_pod.stdout|from_json|json_query('items[1].status.phase')|unique == ["Running"]
-  retries: 10
-  delay: 15
+- name: Wait for xwiki pod to become ready
+  shell: "kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki=postgres --timeout=600s"
+  register: xwiki_pod_ready
+
+- debug: var=xwiki_pod_ready.stdout_lines
 
 - name: Get xwiki backups
   find:
@@ -27,12 +26,11 @@
   command:
     cmd: kubectl rollout restart -n xwiki deployment/xwiki-postgres
 
-- name: Wait for xwiki pods to come online
-  shell: kubectl get pods -n xwiki -o json
-  register: kubectl_get_pod
-  until: kubectl_get_pod.stdout|from_json|json_query('items[1].status.phase')|unique == ["Running"]
-  retries: 10
-  delay: 15
+- name: Wait for xwiki pod to become ready
+  shell: "kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki=postgres --timeout=600s"
+  register: xwiki_pod_ready
+
+- debug: var=xwiki_pod_ready.stdout_lines
 
 - name: Get xwiki database pod name
   command:
