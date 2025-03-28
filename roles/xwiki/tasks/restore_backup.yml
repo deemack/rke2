@@ -75,17 +75,17 @@
 - debug:
     msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
 
-- name: Get xwiki database latest backup
-  kubernetes.core.k8s_exec:
-    kubeconfig: "{{ kubeconfig_path }}"
-    namespace: xwiki
-    pod: "{{ pod_pgsql.stdout }}"
-    container: xwiki-postgres
-    command: ls -u /var/lib/postgresql/data/*.tar
-  register: backup_postgres
+#- name: Get xwiki database latest backup
+#  kubernetes.core.k8s_exec:
+#    kubeconfig: "{{ kubeconfig_path }}"
+#    namespace: xwiki
+#    pod: "{{ pod_pgsql.stdout }}"
+#    container: xwiki-postgres
+#    command: ls -u /var/lib/postgresql/data/*.tar
+#  register: backup_postgres
 
-- debug:
-    msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
+#- debug:
+#    msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
 
 - name: Restore xwiki database
   kubernetes.core.k8s_exec:
@@ -95,3 +95,12 @@
     container: pgsql
     command: pg_restore -U xwiki -d xwiki "{{ backup_postgres.stdout }}"
 
+- name: Restart xwiki pgsql deployment
+  vars:
+    command: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"
+    shell: "{{ command }}"
+
+- name: Restart xwiki deployment
+  vars:
+    command: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
+    shell: "{{ command }}"
