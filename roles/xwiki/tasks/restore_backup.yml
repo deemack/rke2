@@ -65,6 +65,7 @@
     command: createdb -U xwiki xwiki
 
 - name: Get xwiki database latest backup
+  become: yes
   kubernetes.core.k8s_exec:
     kubeconfig: "{{ kubeconfig_path }}"
     namespace: xwiki
