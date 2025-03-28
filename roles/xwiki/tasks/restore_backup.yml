@@ -34,7 +34,7 @@
     cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s'
   register: xwiki_pod_ready
 
-- debug: var=xwiki_pod_ready.stdout_lines[-1]
+- debug: var=xwiki_pod_ready.stdout_lines
 
 - name: Get xwiki database pod name
   command:
@@ -42,5 +42,5 @@
   register: pod_pgsql
 
 - debug:
-    msg: xwiki db pod is "{{ xwiki_pod_ready.stdout }}"
+    msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
 
