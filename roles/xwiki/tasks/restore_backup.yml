@@ -1,6 +1,6 @@
 - name: Wait for xwiki pod to become ready
   command:
-    cmd: "{{ kubectl_path }}" wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s
+    cmd: '"{{ kubectl_path }}" wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s'
   register: xwiki_pod_ready
 
 - debug: var=xwiki_pod_ready.stdout_lines
@@ -29,7 +29,7 @@
 
 - name: Wait for xwiki pod to become ready
   command:
-    cmd: kubectl wait --namespace=xwiki--for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s
+    cmd: kubectl wait --namespace=xwiki --for=condition=Ready pods --selector app=xwiki-postgres --timeout=600s
   register: xwiki_pod_ready
 
 - debug: var=xwiki_pod_ready.stdout_lines
