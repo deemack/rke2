@@ -48,3 +48,39 @@
 - debug:
     msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
 
+- name: Drop xwiki database
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    #container: xwiki-postgres
+    command: dropdb -U xwiki xwiki -f
+
+- name: Create xwiki database
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    container: xwiki-postgres
+    command: createdb -U xwiki xwiki
+
+- name: Get xwiki database latest backup
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    #container: xwiki-postgres
+    command: ls -u /var/lib/postgresql/data/*xwikibackup* | head -1
+  register: backup_postgres
+
+- debug:
+    msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
+
+- name: Restore xwiki database
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    container: pgsql
+    command: pg_restore -U xwiki -d xwiki "{{ backup_postgres.stdout }}"
+
