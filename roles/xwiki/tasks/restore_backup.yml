@@ -83,15 +83,7 @@
     command: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"
     shell: "{{ command }}"
 
-#- name: Restart xwiki pgsql deployment
-#  command:
-#    cmd: "{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" rollout restart -n xwiki deployment/xwiki-postgres"
-
 - name: Restart xwiki deployment
   vars:
     command: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
     shell: "{{ command }}"
-
-#- name: Restart xwiki deployment
-#  command:
-#    cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
