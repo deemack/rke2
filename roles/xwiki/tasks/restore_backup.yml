@@ -97,11 +97,10 @@
     command: pg_restore -U xwiki -d xwiki "{{ backup_postgres.stdout }}"
 
 - name: Restart xwiki pgsql deployment
-  vars:
-    command: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"''
-    shell: "{{ command }}"
+  command:
+    cmd: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"'
 
 - name: Restart xwiki deployment
   vars:
-    command: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"''
+    command: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"'
     shell: "{{ command }}"
