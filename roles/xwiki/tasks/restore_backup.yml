@@ -72,6 +72,7 @@
   command:
     cmd: '"{{ kubectl_path }}" --kubeconfig "{{ kubeconfig_path }}" exec -it -n xwiki "{{ pod_pgsql.stdout }}" -- /bin/bash -c "ls -u /var/lib/postgresql/data/*wikibackup* | head -1"'
   register: backup_postgres
+
 - debug:
     msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
 
@@ -97,10 +98,10 @@
 
 - name: Restart xwiki pgsql deployment
   vars:
-    command: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"
+    command: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"''
     shell: "{{ command }}"
 
 - name: Restart xwiki deployment
   vars:
-    command: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
+    command: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"''
     shell: "{{ command }}"
