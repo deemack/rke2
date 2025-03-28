@@ -42,5 +42,5 @@
   register: pod_pgsql
 
 - debug:
-    msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
+    msg: xwiki db pod is "{{ pod_pgsql.stdout[-1] }}"
 
