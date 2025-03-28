@@ -51,7 +51,7 @@
     file_type: any
   register: backup
 
-- name: Restore from backup when avaiable
+- name: Restore from backup when available
   when: backup.matched != 0
   include_tasks: restore_backup.yml
 
