@@ -1,7 +1,5 @@
 {% for secret in secrets %}
-
 ---
-
 apiVersion: v1
 kind: Secret
 metadata:

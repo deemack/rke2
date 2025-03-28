@@ -1,0 +1,83 @@
+- name: Wait for xwiki pods to come online
+  shell: kubectl get pods -n xwiki -o json
+  register: kubectl_get_pod
+  until: kubectl_get_pod.stdout|from_json|json_query('items[*].status.phase')|unique == ["Running"]
+  retries: 10
+  delay: 15
+
+- name: Get xwiki backups
+  find:
+    paths: "/mnt/storage/xwiki/backup/"
+  register: found_files
+
+- name: Get latest backup file
+  set_fact:
+    latest_file: "{{ found_files.files | sort(attribute='mtime',reverse=true) | first }}"
+
+- debug:
+    msg: latest backup file is "{{ latest_file.path }}"
+
+- name: Copy latest xwiki database backup file to postgres pod
+  copy:
+    src: "{{ latest_file.path }}"
+    dest: /mnt/storage/xwiki/postgres/
+    remote_src: true
+
+- name: Restart xwiki pgsql deployment
+  command:
+    cmd: kubectl rollout restart -n xwiki deployment/xwiki-postgres
+
+- name: Wait for xwiki pods to come online
+  shell: kubectl get pods -n xwiki -o json
+  register: kubectl_get_pod
+  until: kubectl_get_pod.stdout|from_json|json_query('items[*].status.phase')|unique == ["Running"]
+  retries: 10
+  delay: 15
+
+- name: Get xwiki database pod name
+  command:
+    cmd: kubectl get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name"
+  register: pod_pgsql
+
+- debug:
+    msg: xwiki db pod is "{{ pod_pgsql.stdout }}"
+
+- name: Drop xwiki database
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    container: xwiki-postgres
+    command: dropdb -U xwiki xwiki -f
+
+- name: Create xwiki database
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    container: xwiki-postgres
+    command: createdb -U xwiki xwiki
+
+- name: Get xwiki database latest backup
+  command:
+    cmd: kubectl exec -it -n xwiki "{{ pod_pgsql.stdout }}" -- /bin/bash -c "ls -u /var/lib/postgresql/data/*xwikibackup* | head -1"
+  register: backup_postgres
+
+- debug:
+    msg: Restoring xwiki from backup "{{ backup_postgres.stdout }}"
+
+- name: Restore xwiki database
+  kubernetes.core.k8s_exec:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: xwiki
+    pod: "{{ pod_pgsql.stdout }}"
+    container: pgsql
+    command: pg_restore -U xwiki -d xwiki "{{ backup_postgres.stdout }}"
+
+- name: Restart xwiki pgsql deployment
+  command:
+    cmd: kubectl rollout restart -n xwiki deployment/xwiki-postgres
+
+- name: Restart xwiki deployment
+  command:
+    cmd: kubectl rollout restart -n xwiki deployment/xwiki-postgres

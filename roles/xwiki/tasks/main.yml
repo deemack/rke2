@@ -43,3 +43,30 @@
     name: common
     tasks_from: create_service
   loop: "{{ network }}"
+
+- name: Check for xwiki backup
+  become: true
+  find:
+    paths: /mnt/storage/xwiki/backup
+    file_type: all
+  register: backup
+
+- name: Restore from backup when avaiable
+  when: backup.matched != 0
+  include_tasks: restore_backup.yml
+
+- name: Copy xwiki backup script to Host
+  become: true
+  copy:
+    src: backup.sh
+    dest: /usr/sbin/
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Create cronjob to backup the xwiki database each night
+  ansible.builtin.cron:
+    name: "xwiki database backup"
+    minute: "0"
+    hour: "0"
+    job: "/usr/sbin/xwiki_backup.sh"

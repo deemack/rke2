@@ -8,6 +8,10 @@ directories:
     mode: '0777'
     owner: nobody
     group: nogroup
+  - path: /mnt/storage/xwiki/backup
+    mode: '0777'
+    owner: nobody
+    group: nogroup
 persistent_volumes:
   - name: postgres
     path: /mnt/storage/xwiki/postgres
