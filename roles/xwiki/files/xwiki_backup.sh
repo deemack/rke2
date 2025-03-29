@@ -5,7 +5,8 @@
 #A separate cron job will remove old backups after a specified time
 
 #Get the name of the wikijs postgres pod
-pod_str=$(kubectl get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name")
+xwiki_db_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name")
+xwiki_app_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki --no-headers -o custom-columns=":metadata.name")
 
 #Space Separated List of Databases to Dump
 #DATABASE="xwiki d1 d3"
@@ -13,6 +14,9 @@ NAMESPACE=xwiki
 DATABASE="xwiki"
 DBUSER=xwiki
 DBPASS=xwiki
+
+#Backup Directory
+BACKUPDIR=/var/backups
 
 #XWIKI data folder
 DATAFOLDER=/usr/local/xwiki/data/
@@ -23,31 +27,26 @@ DEPLOYCONTEXT=ROOT
 
 DEPLOYDIR=${WEBAPPDIR}/${DEPLOYCONTEXT}
 DATE=$(date '+%Y-%m-%d')
-mkdir /var/lib/postgresql/data/${DATE}
+echo "Making date Directories"
+kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "mkdir -p ${BACKUPDIR}/${DATE}"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "mkdir -p ${BACKUPDIR}/${DATE}"
 
 #backup postgres
-kubectl exec -it -n ${NAMESPACE} $pod_str -- /bin/bash -c "pg_dump ${DATABASE} -U ${DBUSER} -F t | /bin/gzip > /var/lib/postgresql/data/${DATE}/${DATABASE}.sql.gz"
+echo "Backing up postgres"
+kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "pg_dump ${DATABASE} -U ${DBUSER} -F t | /bin/gzip > ${BACKUPDIR}/${DATE}/${DATABASE}.sql.gz"
 
 echo "Backing up Data"
 #Backup Exteral Data Storage
-/bin/tar -C ${DATAFOLDER}/../ -zcf ./${DATE}/data.tar.gz data
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -C ${DATAFOLDER}/../ -zcf ${BACKUPDIR}/${DATE}/data.tar.gz data"
 
 #Backing Java Keystore
-/bin/cp /srv/tomcat6/.keystore ./${DATE}/.keystore
+#/bin/cp /srv/tomcat6/.keystore ${BACKUPDIR}/${DATE}/.keystore
 
 echo "Backing up xwiki configuration"
-/bin/cp ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml ./${DATE}/hibernate.cfg.xml
-/bin/cp ${DEPLOYDIR}/WEB-INF/xwiki.cfg ./${DATE}/xwiki.cfg
-/bin/cp ${DEPLOYDIR}/WEB-INF/xwiki.properties ./${DATE}/xwiki.properties
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml ${BACKUPDIR}/${DATE}/hibernate.cfg.xml"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/xwiki.cfg ${BACKUPDIR}/${DATE}/xwiki.cfg"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/xwiki.properties ${BACKUPDIR}/${DATE}/xwiki.properties"
 
 #Backup Deploy Context
-echo "Backing UP deploy Context"
-/bin/tar -C ${DEPLOYDIR}/../ -zcf ./${DATE}/ROOT.tar.gz ROOT
-
-echo "DONE"
-
-
-kubectl exec -it -n xwiki $pod_str -- /bin/bash -c "pg_dump xwiki -U xwiki -F t > /var/lib/postgresql/data/$d-xwikibackup.tar"
-
-# Copy the backup to the /mnt/storage/backup/wikijs location on the 2TB SSD.
-cp -n /mnt/storage/xwiki/postgres/*xwikibackup* /mnt/storage/xwiki/backup
+echo "Backing Deploy Context"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -C ${DEPLOYDIR}/../ -zcf ${BACKUPDIR}/${DATE}/ROOT.tar.gz ROOT"
