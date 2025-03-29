@@ -37,17 +37,8 @@ spec:
         volumeMounts:
         - name: postgres-pv-claim
           mountPath: "/var/lib/postgresql/data"
-      initContainers:
-      - name: xwiki-backup
-        image: busybox:1.35
-        command:
-        - "/bin/mkdir"
-        args:
-        - "-p"
-        - "/backup"
-        volumeMounts:
         - name: xwiki-backup-pv-claim
-          mountPath: "/backup"
+          mountPath: "/var/backups"
       volumes:
       - name: postgres-pv-claim
         persistentVolumeClaim:

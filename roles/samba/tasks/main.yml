@@ -19,7 +19,12 @@
     backup: yes
     state: present
 
-- name: Restart samba service
+- name: Restart smb service
   ansible.builtin.service:
-    name: smbd
+    name: smb
+    state: restarted
+
+- name: Restart nmb service
+  ansible.builtin.service:
+    name: nmb
     state: restarted
