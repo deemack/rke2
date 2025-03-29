@@ -42,7 +42,7 @@ spec:
         - containerPort: 8080
         volumeMounts:
         - name: xwiki-pv-claim
-          mountPath: /var/xwiki/data
+          mountPath: /usr/local/xwiki/data
       volumes:
       - name: xwiki-pv-claim
         persistentVolumeClaim:

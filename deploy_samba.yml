@@ -1,0 +1,7 @@
+---
+- name: Deploy Samba
+  hosts: minipc
+  become: true
+  gather_facts: true
+  roles:
+    - samba

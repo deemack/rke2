@@ -19,11 +19,17 @@ persistent_volumes:
   - name: xwiki
     path: /mnt/storage/xwiki/xwiki
     capacity: 10Gi
+  - name: backup
+    path: /mnt/storage/xwiki/backup
+    capacity: 10Gi
 persistent_volume_claims:
   - name: postgres-pv-claim
     storage: 10Gi
   - name: xwiki-pv-claim
     storage: 10Gi
+  - name: xwiki-backup-pv-claim
+    storage: 10Gi
+
 network:
   - type: NodePort
     name: xwiki-service

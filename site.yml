@@ -34,3 +34,7 @@
 - name: Deploy xwiki
   import_playbook: deploy_xwiki.yml
   tags: deploy_xwiki
+
+- name: Deploy samba
+  import_playbook: deploy_samba.yml
+  tags: deploy_samba

@@ -59,6 +59,7 @@
 - name: Restore from backup when available
   when: backup.matched != 0
   include_tasks: restore_backup.yml
+  tags: xwiki_restore
 
 - name: Copy xwiki backup script to Host
   become: true
