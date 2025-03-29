@@ -46,6 +46,8 @@ echo "Backing up xwiki configuration"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml ${BACKUPDIR}/${DATE}/hibernate.cfg.xml"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/xwiki.cfg ${BACKUPDIR}/${DATE}/xwiki.cfg"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/xwiki.properties ${BACKUPDIR}/${DATE}/xwiki.properties"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${DEPLOYDIR}/WEB-INF/classes/logback.xml ${BACKUPDIR}/${DATE}/classes/logback.xml"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp -r ${DEPLOYDIR}/WEB-INF/observation/* ${BACKUPDIR}/${DATE}/observation/"
 
 #Backup Deploy Context
 echo "Backing Deploy Context"

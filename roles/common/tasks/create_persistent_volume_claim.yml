@@ -7,6 +7,7 @@
   vars:
     name: "{{ item.name }}"
     storage: "{{ item.storage }}"
+    accessModes: "{{ item.accessModes }}"
 
 - name: Create Persistent Volume Claim
   kubernetes.core.k8s:

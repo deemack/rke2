@@ -25,10 +25,13 @@ persistent_volumes:
 persistent_volume_claims:
   - name: postgres-pv-claim
     storage: 10Gi
+    accessModes: ReadWriteOnce
   - name: xwiki-pv-claim
     storage: 10Gi
+    accessModes: ReadWriteOnce
   - name: xwiki-backup-pv-claim
     storage: 10Gi
+    accessModes: ReadWriteMany
 
 network:
   - type: NodePort

@@ -43,7 +43,12 @@ spec:
         volumeMounts:
         - name: xwiki-pv-claim
           mountPath: /usr/local/xwiki/data
+        - name: xwiki-backup-pv-claim
+          mountPath: "/var/backups"
       volumes:
       - name: xwiki-pv-claim
         persistentVolumeClaim:
           claimName: xwiki-pv-claim
+      - name: xwiki-backup-pv-claim
+        persistentVolumeClaim:
+          claimName: xwiki-backup-pv-claim

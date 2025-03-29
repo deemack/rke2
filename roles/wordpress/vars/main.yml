@@ -18,8 +18,10 @@ persistent_volumes:
 persistent_volume_claims:
   - name: mysql-pv-claim
     storage: 5Gi
+    accessModes: ReadWriteOnce
   - name: wordpress-pv-claim
     storage: 5Gi
+    accessModes: ReadWriteOnce
 network:
   - type: NodePort
     name: wordpress-service
