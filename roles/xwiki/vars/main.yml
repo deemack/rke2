@@ -16,12 +16,15 @@ persistent_volumes:
   - name: postgres
     path: /mnt/storage/xwiki/postgres
     capacity: 10Gi
+    accessModes: ReadWriteOnce
   - name: xwiki
     path: /mnt/storage/xwiki/xwiki
     capacity: 10Gi
+    accessModes: ReadWriteOnce
   - name: backup
     path: /mnt/storage/xwiki/backup
     capacity: 10Gi
+    accessModes: ReadWriteMany
 persistent_volume_claims:
   - name: postgres-pv-claim
     storage: 10Gi

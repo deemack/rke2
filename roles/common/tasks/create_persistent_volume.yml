@@ -8,6 +8,7 @@
     path: "{{ item.path }}"
     name: "{{ item.name }}"
     capacity: "{{ item.capacity }}"
+    accessModes: "{{ item.accessModes }}"
 
 - name: Create Persistent Volume
   kubernetes.core.k8s:

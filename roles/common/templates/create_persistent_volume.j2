@@ -9,6 +9,6 @@ spec:
   capacity:
     storage: "{{ capacity }}"
   accessModes:
-    - ReadWriteOnce
+    - "{{ accessModes }}"
   hostPath:
     path: "{{ path }}"

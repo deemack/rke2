@@ -12,9 +12,11 @@ persistent_volumes:
   - name: mysql
     path: /mnt/storage/wordpress/mysql
     capacity: 10Gi
+    accessModes: ReadWriteOnce
   - name: wordpress
     path: /mnt/storage/wordpress/wordpress
     capacity: 10Gi
+    accessModes: ReadWriteOnce
 persistent_volume_claims:
   - name: mysql-pv-claim
     storage: 5Gi

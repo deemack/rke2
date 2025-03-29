@@ -5,7 +5,7 @@ metadata:
 spec:
   storageClassName: manual
   accessModes:
-    - "ReadWriteOnce"
+    - "{{ accessModes }}"
   resources:
     requests:
       storage: "{{ storage }}"
