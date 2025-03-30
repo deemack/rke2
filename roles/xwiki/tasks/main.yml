@@ -64,7 +64,7 @@
 - name: Copy restore script
   copy:
     src: xwiki_restore.sh
-    dest: /temp
+    dest: /tmp
     mode: u+rwx
 - name: Restore from backup when available
   when: backup.matched != 0
