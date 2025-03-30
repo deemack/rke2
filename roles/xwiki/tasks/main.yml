@@ -56,10 +56,15 @@
     file_type: any
   register: backup
 
+#- name: Restore from backup when available
+#  when: backup.matched != 0
+#  include_tasks: restore_backup.yml
+#  tags: xwiki_restore
+
 - name: Restore from backup when available
   when: backup.matched != 0
-  include_tasks: restore_backup.yml
-  tags: xwiki_restore
+  script: xwiki_restore.sh
+  tags: xwiki_restore#
 
 - name: Copy xwiki backup script to Host
   become: true
