@@ -63,13 +63,13 @@
 
 - name: Copy restore script
   copy:
-    src: restore.sh
+    src: xwiki_restore.sh
     dest: /temp
     mode: u+rwx
 - name: Restore from backup when available
   when: backup.matched != 0
   command:
-    cmd: /tmp/restore.sh
+    cmd: /tmp/xwiki_restore.sh
   tags: xwiki_restore
 
 - name: Copy xwiki backup script to Host
