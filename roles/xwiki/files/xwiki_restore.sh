@@ -11,6 +11,9 @@ DATAFOLDER=/usr/local/xwiki/data/
 #Backup Directory
 BACKUPDIR=/var/backups
 
+#DEPLOY Directory
+DEPLOYDIR=${WEBAPPDIR}/${DEPLOYCONTEXT}
+
 #Get the name of the wikijs postgres pod
 xwiki_db_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name")
 xwiki_app_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki --no-headers -o custom-columns=":metadata.name")
