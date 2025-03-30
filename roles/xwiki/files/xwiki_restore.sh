@@ -44,11 +44,11 @@ kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -x
 #kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "cp -r ${BACKUPDIR}/${latest_backup_date}/data ${DATAFOLDER}/../"
 
 ##########   RESTORE XWIKI CONFIGURATION   ##########
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp  ${BACKUPDIR}/${latest_backup_date}/hibernate.cfg.xml ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/hibernate.cfg.xml ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/xwiki.cfg ${DEPLOYDIR}/WEB-INF/xwiki.cfg"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/xwiki.properties ${DEPLOYDIR}/WEB-INF/xwiki.properties"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/classes/logback.xml ${DEPLOYDIR}/WEB-INF/classes/logback.xml"
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp -r ${BACKUPDIR}/${latest_backup_date}/observation/ ${DEPLOYDIR}/WEB-INF/"
 
 ##########   RESTORE Deploy Context   ##########
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar /bin/tar -xzf ${BACKUPDIR}/${DATE}/ROOT.tar.gz -C ${DEPLOYDIR}/../"
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/ROOT.tar.gz -C ${DEPLOYDIR}/../"
