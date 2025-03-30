@@ -33,7 +33,9 @@ kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "mkdir -p ${
 
 #backup postgres
 echo "Backing up postgres"
+sudo chown 999:nogroup /mnt/storage/xwiki/postgres
 kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "pg_dump ${DATABASE} -U ${DBUSER} -F t | /bin/gzip > ${BACKUPDIR}/${DATE}/${DATABASE}.sql.gz"
+sudo chown nobody:nogroup /mnt/storage/xwiki/postgres
 
 echo "Backing up Data"
 #Backup Exteral Data Storage
