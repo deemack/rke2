@@ -8,6 +8,9 @@ DBPASS=xwiki
 #XWIKI data folder
 DATAFOLDER=/usr/local/xwiki/data/
 
+#Backup Directory
+BACKUPDIR=/var/backups
+
 #Get the name of the wikijs postgres pod
 xwiki_db_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name")
 xwiki_app_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki --no-headers -o custom-columns=":metadata.name")
@@ -31,14 +34,14 @@ kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "pg_restore -
 sudo chown nobody:nogroup /mnt/storage/xwiki/postgres
 
 ##########  RESTORE DATA  ##########
-#Decompress Data archive
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/data.tar.gz"
+#Decompress Data archive and extract to Data path
+kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/data.tar.gz -C ${DATAFOLDER}/../"
 
 #Remove old Data folder
 #kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "rm -r ${DATAFOLDER}"
 
 #Restore Data backup folder
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "cp -r ${BACKUPDIR}/${latest_backup_date}/data ${DATAFOLDER}/../"
+#kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "cp -r ${BACKUPDIR}/${latest_backup_date}/data ${DATAFOLDER}/../"
 
 ##########   RESTORE XWIKI CONFIGURATION   ##########
 kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp  ${BACKUPDIR}/${latest_backup_date}/hibernate.cfg.xml ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml"

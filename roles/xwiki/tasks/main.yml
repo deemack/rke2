@@ -61,10 +61,16 @@
 #  include_tasks: restore_backup.yml
 #  tags: xwiki_restore
 
+- name: Copy restore script
+  copy:
+    src: restore.sh
+    dest: /temp
+    mode: u+rwx
 - name: Restore from backup when available
   when: backup.matched != 0
-  script: xwiki_restore.sh
-  tags: xwiki_restore#
+  command:
+    cmd: /tmp/restore.sh
+  tags: xwiki_restore
 
 - name: Copy xwiki backup script to Host
   become: true
@@ -74,6 +80,7 @@
     owner: root
     group: root
     mode: 0755
+    remote_src: yes
 
 - name: Create cronjob to backup the xwiki database each night
   ansible.builtin.cron:
