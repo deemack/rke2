@@ -78,7 +78,12 @@
 
 - name: Restore from backup when available
   when: backup.matched != 0
-  remote_user: "{{ cluster_admin }}"
+  become: yes
+  become_user: "{{ cluster_admin }}"
+  become_method: su
+  become_flags: '--login'
+  vars:
+    ansible_become_pass: "{{ cluster_admin_password }}"
   command:
     cmd: /tmp/xwiki_restore.sh
   tags: xwiki_restore
