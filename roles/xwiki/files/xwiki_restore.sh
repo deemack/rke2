@@ -1,6 +1,7 @@
 #!/bin/bash
 
 #This script will restore xwiki from a backup
+
 NAMESPACE=xwiki
 DATABASE="xwiki"
 DBUSER=xwiki
@@ -22,8 +23,8 @@ xwiki_app_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki --no-headers -o custo
 latest_backup_date="$(ls -t /mnt/storage/xwiki/backup/ | head -1)"
 
 ##########   RESTORE POSTGRES DATABASE   ##########
-#Decompress latest postgres database backup
-kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "gzip -d ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql.gz"
+#Decompress latest postgres database backup but keep original
+kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "gzip -dk ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql.gz"
 
 #Drop postgres database
 kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "dropdb -U ${DBUSER} ${DATABASE} -f"
@@ -55,3 +56,6 @@ kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp -r $
 
 ##########   RESTORE Deploy Context   ##########
 kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/ROOT.tar.gz -C ${DEPLOYDIR}/../"
+
+#Cleanup
+kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "rm ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql"
