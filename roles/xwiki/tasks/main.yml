@@ -116,8 +116,8 @@
 
 - name: Restart xwiki pgsql deployment
   command:
-    cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"
+    cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deploy"
 
-- name: Restart xwiki deployment
-  command:
-    cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
+#- name: Restart xwiki deployment
+ # command:
+  #  cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
