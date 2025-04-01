@@ -4,6 +4,8 @@
 #It will create a backup with a time stamp, which will be copied to /mnt/storage/backups/xwiki/
 #A separate cron job will remove old backups after a specified time
 
+export KUBECONFIG="/etc/rancher/rke2/rke2.yaml"
+
 #Get the name of the wikijs postgres pod
 xwiki_db_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki-postgres --no-headers -o custom-columns=":metadata.name")
 xwiki_app_pod_str=$(kubectl get pods -n xwiki -l=app=xwiki --no-headers -o custom-columns=":metadata.name")
