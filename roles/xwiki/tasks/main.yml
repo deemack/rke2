@@ -113,3 +113,11 @@
     hour: "0"
     user: root
     job: "/usr/sbin/xwiki_backup.sh"
+
+- name: Restart xwiki pgsql deployment
+  command:
+    cmd: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki-postgres"'
+
+- name: Restart xwiki deployment
+  command:
+    cmd: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"'
