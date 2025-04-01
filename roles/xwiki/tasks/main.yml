@@ -69,7 +69,7 @@
 
 - name: Restore from backup when available
   when: backup.matched != 0
-  remote_user: "{{ k8s_admin }}"
+  remote_user: "{{ cluster_admin }}"
   command:
     cmd: /tmp/xwiki_restore.sh
   tags: xwiki_restore
