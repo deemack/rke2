@@ -61,6 +61,14 @@
 #  include_tasks: restore_backup.yml
 #  tags: xwiki_restore
 
+- name: Copy backup script
+  copy:
+    src: xwiki_backup.sh
+    dest: /tmp
+    mode: u+rwx
+    owner: k8sadmin
+    group: k8sadmin
+
 - name: Copy restore script
   copy:
     src: xwiki_restore.sh
