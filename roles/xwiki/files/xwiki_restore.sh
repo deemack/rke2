@@ -23,22 +23,22 @@ latest_backup_date="$(ls -t /mnt/storage/xwiki/backup/ | head -1)"
 
 ##########   RESTORE POSTGRES DATABASE   ##########
 #Decompress latest postgres database backup
-kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "gzip -d ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql.gz"
+kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "gzip -d ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql.gz"
 
 #Drop postgres database
-kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "dropdb -U ${DBUSER} ${DATABASE} -f"
+kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "dropdb -U ${DBUSER} ${DATABASE} -f"
 
 #Create postgres database
-kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "createdb -U ${DBUSER} ${DATABASE}"
+kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "createdb -U ${DBUSER} ${DATABASE}"
 
 #Restore postgres database
 sudo chown 999:nogroup /mnt/storage/xwiki/postgres
-kubectl exec -it -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "pg_restore -U ${DBUSER} -d ${DATABASE} ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql"
+kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "pg_restore -U ${DBUSER} -d ${DATABASE} ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql"
 sudo chown nobody:nogroup /mnt/storage/xwiki/postgres
 
 ##########  RESTORE DATA  ##########
 #Decompress Data archive and extract to Data path
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/data.tar.gz -C ${DATAFOLDER}/../"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/data.tar.gz -C ${DATAFOLDER}/../"
 
 #Remove old Data folder
 #kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "rm -r ${DATAFOLDER}"
@@ -47,11 +47,11 @@ kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -x
 #kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "cp -r ${BACKUPDIR}/${latest_backup_date}/data ${DATAFOLDER}/../"
 
 ##########   RESTORE XWIKI CONFIGURATION   ##########
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/hibernate.cfg.xml ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml"
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/xwiki.cfg ${DEPLOYDIR}/WEB-INF/xwiki.cfg"
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/xwiki.properties ${DEPLOYDIR}/WEB-INF/xwiki.properties"
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/classes/logback.xml ${DEPLOYDIR}/WEB-INF/classes/logback.xml"
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp -r ${BACKUPDIR}/${latest_backup_date}/observation/ ${DEPLOYDIR}/WEB-INF/"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/hibernate.cfg.xml ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/xwiki.cfg ${DEPLOYDIR}/WEB-INF/xwiki.cfg"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/xwiki.properties ${DEPLOYDIR}/WEB-INF/xwiki.properties"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/classes/logback.xml ${DEPLOYDIR}/WEB-INF/classes/logback.xml"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp -r ${BACKUPDIR}/${latest_backup_date}/observation/ ${DEPLOYDIR}/WEB-INF/"
 
 ##########   RESTORE Deploy Context   ##########
-kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/ROOT.tar.gz -C ${DEPLOYDIR}/../"
+kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/ROOT.tar.gz -C ${DEPLOYDIR}/../"
