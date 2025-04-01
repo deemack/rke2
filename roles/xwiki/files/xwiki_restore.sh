@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #This script will restore xwiki from a backup
-
+export KUBECONFIG="/etc/rancher/rke2/rke2.yaml"
 NAMESPACE=xwiki
 DATABASE="xwiki"
 DBUSER=xwiki
@@ -33,19 +33,13 @@ kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "dropdb -U ${D
 kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "createdb -U ${DBUSER} ${DATABASE}"
 
 #Restore postgres database
-sudo chown 999:nogroup /mnt/storage/xwiki/postgres
+chown 999:nogroup /mnt/storage/xwiki/postgres
 kubectl exec -i -n ${NAMESPACE} $xwiki_db_pod_str -- /bin/bash -c "pg_restore -U ${DBUSER} -d ${DATABASE} ${BACKUPDIR}/${latest_backup_date}/${DATABASE}.sql"
-sudo chown nobody:nogroup /mnt/storage/xwiki/postgres
+chown nobody:nogroup /mnt/storage/xwiki/postgres
 
 ##########  RESTORE DATA  ##########
 #Decompress Data archive and extract to Data path
 kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/tar -xzf ${BACKUPDIR}/${latest_backup_date}/data.tar.gz -C ${DATAFOLDER}/../"
-
-#Remove old Data folder
-#kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "rm -r ${DATAFOLDER}"
-
-#Restore Data backup folder
-#kubectl exec -it -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "cp -r ${BACKUPDIR}/${latest_backup_date}/data ${DATAFOLDER}/../"
 
 ##########   RESTORE XWIKI CONFIGURATION   ##########
 kubectl exec -i -n ${NAMESPACE} $xwiki_app_pod_str -- /bin/bash -c "/bin/cp ${BACKUPDIR}/${latest_backup_date}/hibernate.cfg.xml ${DEPLOYDIR}/WEB-INF/hibernate.cfg.xml"

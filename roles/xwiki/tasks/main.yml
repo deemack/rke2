@@ -102,9 +102,7 @@
   become: true
   copy:
     src: /tmp/xwiki_backup.sh
-    dest: /usr/bin/
-    owner: "{{ cluster_admin }}"
-    group: "{{ cluster_admin }}"
+    dest: /usr/sbin/
     mode: 0755
     remote_src: yes
 
@@ -113,5 +111,5 @@
     name: "xwiki database backup"
     minute: "0"
     hour: "0"
-    user: "{{ cluster_admin }}"
-    job: "/usr/bin/xwiki_backup.sh"
+    user: root
+    job: "/usr/sbin/xwiki_backup.sh"
