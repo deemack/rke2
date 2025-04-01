@@ -66,6 +66,8 @@
     src: xwiki_restore.sh
     dest: /tmp
     mode: u+rwx
+    owner: k8sadmin
+    group: k8sadmin
 
 - name: check user
   become: yes
