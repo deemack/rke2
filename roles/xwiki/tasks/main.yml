@@ -56,11 +56,6 @@
     file_type: any
   register: backup
 
-#- name: Restore from backup when available
-#  when: backup.matched != 0
-#  include_tasks: restore_backup.yml
-#  tags: xwiki_restore
-
 - name: Copy backup script
   copy:
     src: xwiki_backup.sh
@@ -114,10 +109,6 @@
     user: root
     job: "/usr/sbin/xwiki_backup.sh"
 
-- name: Restart xwiki pgsql deployment
+- name: Restart xwiki deployment
   command:
     cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deploy"
-
-#- name: Restart xwiki deployment
- # command:
-  #  cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
