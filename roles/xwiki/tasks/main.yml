@@ -120,4 +120,4 @@
 
 - name: Restart xwiki deployment
   command:
-    cmd: '"{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"'
+    cmd: "{{ kubectl_path }} --kubeconfig {{ kubeconfig_path }} rollout restart -n xwiki deployment/xwiki"
