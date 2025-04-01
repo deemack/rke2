@@ -93,7 +93,7 @@
 - name: Copy xwiki backup script to Host
   become: true
   copy:
-    src: xwiki_backup.sh
+    src: /tmp/xwiki_backup.sh
     dest: /usr/bin/
     owner: "{{ cluster_admin }}"
     group: "{{ cluster_admin }}"
