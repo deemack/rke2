@@ -23,7 +23,7 @@
   ansible.builtin.shell: |
     (echo "{{ cluster_admin_password }}" ; echo "{{ cluster_admin_password }}") | smbpasswd -s -a {{ cluster_admin }}
   become: true
-  # no_log: true  # Optional:  Hide password from log
+  no_log: true  # Optional:  Hide password from log
 
 
 - name: Restart smb service
