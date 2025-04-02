@@ -1,13 +1,15 @@
 # rke2
-The autoinst.xml creates account dave:password
+### Bootable USB Creation
+* Download the OpenSUSE Offline Server ISO (~4.3GB) https://get.opensuse.org/leap/15.6/?type=server#download
+* Use RUFUS to create a Bootable USB
+* Copy the autoinst.xml to the root of the Bootable USB
+  * Note the autoinst.xml creates a bootstrap admin account k8sadmin:password
 
-Commands run after OpenSuse is installed:
+### Server OS installation
+* USB Boot Install OpenSUSE to the miniPC
+  * The NVME Primary Drive will automatically be partitioned and used for the OS installation
 
-```
-curl -sfL https://get.rke2.io | sh -
-systemctl enable rke2-server.service
-systemctl start rke2-server.service
-```
+### Commands run after OpenSuse is installed:
 Add kubect to path
 ```
 sudo vim ~/.bashrc
@@ -16,10 +18,10 @@ sudo vim ~/.bashrc
 ```
 export PATH=/var/lib/rancher/rke2/bin:$PATH"
 ```
-- Copy the kubeconfig file to the user home for cluster access
+Copy the kubeconfig file to the user home for cluster access
 ```
 sudo cp /etc/rancher/rke2/rke2.yaml ~/rke2.yaml
-sudo chown dave:wheel ~/rke2.yaml
+sudo chown k8sadmin:wheel ~/rke2.yaml
 ```
 
 After running this installation:
