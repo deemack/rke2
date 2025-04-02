@@ -19,6 +19,13 @@
     backup: yes
     state: present
 
+- name: Create SMB Users
+  ansible.builtin.shell: |
+    (echo "{{ cluster_admin_password }}" ; echo "{{ cluster_admin_password }}") | smbpasswd -s -a {{ cluster_admin }}
+  become: true
+  # no_log: true  # Optional:  Hide password from log
+
+
 - name: Restart smb service
   ansible.builtin.service:
     name: smb

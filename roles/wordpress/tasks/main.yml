@@ -4,6 +4,11 @@
     name: common
     tasks_from: create_namespace
 
+- name: Create Secrets
+  include_role:
+    name: secrets
+    tasks_from: main
+
 - name: Include create_mount_directory playbook
   include_role:
     name: common
