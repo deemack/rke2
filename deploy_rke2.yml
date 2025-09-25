@@ -8,13 +8,13 @@
      tags: debug
 
 - name: Clean the RKE2 Cluster Node
-  import_playbook: clean_system.yml
+  import_playbook: playbooks/clean_system.yml
   tags: [ 'never', 'clean_system' ]
 
 - name: Configure the RKE2 Cluster
-  import_playbook: create_cluster.yml
+  import_playbook: playbooks/create_cluster.yml
   tags: create_cluster
 
 - name: Deploy metalLB
-  import_playbook: deploy_metallb.yml
+  import_playbook: playbooks/deploy_metallb.yml
   tags: deploy_metallb
