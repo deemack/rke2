@@ -20,7 +20,7 @@
 - name: Deploy latest version of MetalLB via Helm
   kubernetes.core.helm:
     kubeconfig: "{{ kubeconfig_path }}"
-    name: stable
+    name: metallb
     chart_ref: stable/metallb
     release_namespace: metallb-system
 
