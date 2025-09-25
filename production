@@ -1,7 +1,0 @@
-minipc:
-  hosts:
-    kubeprod:
-      ansible_connection: local
-cloud:
-  hosts:
-    bluegoat:

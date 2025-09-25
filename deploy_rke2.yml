@@ -1,0 +1,20 @@
+---
+
+- name: Debug Print Variables
+  hosts: minipc
+  tasks:
+   - debug:
+      msg: "{{ nodeports | selectattr('application', 'match', 'chores') | map(attribute='port') }}"
+     tags: debug
+
+- name: Clean the RKE2 Cluster Node
+  import_playbook: clean_system.yml
+  tags: [ 'never', 'clean_system' ]
+
+- name: Configure the RKE2 Cluster
+  import_playbook: create_cluster.yml
+  tags: create_cluster
+
+- name: Deploy metalLB
+  import_playbook: deploy_metallb.yml
+  tags: deploy_metallb

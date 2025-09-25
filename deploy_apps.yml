@@ -8,33 +8,33 @@
      tags: debug
 
 - name: Clean the RKE2 Cluster Node
-  import_playbook: clean_system.yml
+  import_playbook: playbooks/clean_system.yml
   tags: [ 'never', 'clean_system' ]
 
 - name: Configure the RKE2 Cluster
-  import_playbook: create_cluster.yml
+  import_playbook: playbooks/create_cluster.yml
   tags: create_cluster
 
 - name: Deploy metalLB
-  import_playbook: deploy_metallb.yml
+  import_playbook: playbooks/deploy_metallb.yml
   tags: deploy_metallb
 
-- name: Configure Monitoring
-  import_playbook: deploy_monitoring.yml
-  tags: deploy_monitoring
+- name: Configure Dashboard
+  import_playbook: playbooks/deploy_dashboard.yml
+  tags: deploy_dashboard
 
 - name: Deploy Wordpress
-  import_playbook: deploy_wordpress.yml
+  import_playbook: playbooks/deploy_wordpress.yml
   tags: deploy_wordpress
 
 - name: Deploy Homepage
-  import_playbook: deploy_homepage.yml
+  import_playbook: playbooks/deploy_homepage.yml
   tags: deploy_homepage
 
 - name: Deploy xwiki
-  import_playbook: deploy_xwiki.yml
+  import_playbook: playbooks/deploy_xwiki.yml
   tags: deploy_xwiki
 
 - name: Deploy samba
-  import_playbook: deploy_samba.yml
+  import_playbook: playbooks/deploy_samba.yml
   tags: deploy_samba

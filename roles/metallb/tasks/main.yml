@@ -1,26 +1,28 @@
-- name: Fetch IP address of Host
+---
+- name: Include create_namespace playbook
+  include_role:
+    name: common
+    tasks_from: create_namespace
+
+- name: Add MetalLB Helm repository
+  kubernetes.core.helm_repository:
+    name: stable
+    repo_url: https://metallb.github.io/metallb
+
+- name: Update helm repositories
+  ansible.builtin.command: helm repo update
+
+- name: Set the current context to the metallb-system namespace
   vars:
-    command: "hostname -I | awk '{print $1}'"
+    command: "kubectl config set-context --current --namespace metallb-system --kubeconfig {{ kubeconfig_path }}"
   shell: "{{ command }}"
-  register: host_ip
 
-- name: Host IP
-  debug:
-    var: host_ip.stdout
-
-- name: Download metalLB manifest
-  get_url:
-    url: https://raw.githubusercontent.com/metallb/metallb/v0.14.9/config/manifests/metallb-native.yaml
-    dest: /tmp/metallb-native.yml
-    mode: '0664'
-  tags: metalLB
-
-- name: Apply metalLB manifest to the cluster.
-  kubernetes.core.k8s:
+- name: Deploy latest version of MetalLB via Helm
+  kubernetes.core.helm:
     kubeconfig: "{{ kubeconfig_path }}"
-    state: present
-    src: /tmp/metallb-native.yml
-  tags: metalLB
+    name: metalLB
+    chart_ref: stable/metallb
+    release_namespace: metallb-system
 
 - name: Create MetalLB IPAddressPool from template
   become: true
