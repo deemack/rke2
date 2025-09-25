@@ -17,11 +17,10 @@
     command: "{{ kubectl_path }} config set-context --current --namespace metallb-system --kubeconfig {{ kubeconfig_path }}"
   shell: "{{ command }}"
 
-
 - name: Deploy latest version of MetalLB via Helm
   kubernetes.core.helm:
     kubeconfig: "{{ kubeconfig_path }}"
-    name: metalLB
+    name: stable
     chart_ref: stable/metallb
     release_namespace: metallb-system
 
