@@ -10,6 +10,30 @@
   * The NVME Primary Drive will automatically be partitioned and used for the OS installation
 
 ### Commands run after OpenSuse is installed:
+Change hostname
+```
+sudo hostnamectl set-hostname [kubeprod/kubedev/etc]
+```
+Clone this repo
+```
+git clone https://github.com/deemack/rke2.git
+```
+Change to the rke2 directory
+```
+cd rke2
+```
+Run the playbook to create the cluster
+```
+ansible-playbook -i production site.yml --tags create_cluster --limit kubeprod -K --ask-vault-pass
+```
+Run the playbook to deploy metal LB
+```
+ansible-playbook -i production site.yml --tags deploy_metallb -limit kubeprod -K --ask-vault-pass
+```
+Run the playbook to deploy the rest of the site
+```
+ansible-playbook -i production site.yml -limit kubeprod -K --ask-vault-pass
+```
 Add kubect to path
 ```
 sudo vim ~/.bashrc
