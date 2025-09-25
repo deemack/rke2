@@ -23,6 +23,12 @@
     name: metallb
     chart_ref: stable/metallb
     release_namespace: metallb-system
+    
+- name: Fetch IP address of Host
+  vars:
+    command: "hostname -I | awk '{print $1}'"
+  shell: "{{ command }}"
+  register: host_ip
 
 - name: Create MetalLB IPAddressPool from template
   become: true
