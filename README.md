@@ -28,11 +28,11 @@ ansible-playbook -i production site.yml --tags create_cluster --limit kubeprod -
 ```
 Run the playbook to deploy metal LB
 ```
-ansible-playbook -i production site.yml --tags deploy_metallb -limit kubeprod -K --ask-vault-pass
+ansible-playbook -i production site.yml --tags deploy_metallb --limit kubeprod -K --ask-vault-pass
 ```
 Run the playbook to deploy the rest of the site
 ```
-ansible-playbook -i production site.yml -limit kubeprod -K --ask-vault-pass
+ansible-playbook -i production site.yml --limit kubeprod -K --ask-vault-pass
 ```
 Add kubect to path
 ```
