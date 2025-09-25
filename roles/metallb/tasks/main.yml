@@ -14,8 +14,9 @@
 
 - name: Set the current context to the metallb-system namespace
   vars:
-    command: "kubectl config set-context --current --namespace metallb-system --kubeconfig {{ kubeconfig_path }}"
+    command: "{{ kubectl_path }} config set-context --current --namespace metallb-system --kubeconfig {{ kubeconfig_path }}"
   shell: "{{ command }}"
+
 
 - name: Deploy latest version of MetalLB via Helm
   kubernetes.core.helm:
