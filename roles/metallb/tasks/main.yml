@@ -17,13 +17,16 @@
     command: "{{ kubectl_path }} config set-context --current --namespace metallb-system --kubeconfig {{ kubeconfig_path }}"
   shell: "{{ command }}"
 
+- name: Copy helm binary to path searched by ansible
+  shell: cp /usr/local/bin/helm /usr/bin
+
 - name: Deploy latest version of MetalLB via Helm
   kubernetes.core.helm:
     kubeconfig: "{{ kubeconfig_path }}"
     name: metallb
     chart_ref: stable/metallb
     release_namespace: metallb-system
-    
+
 - name: Fetch IP address of Host
   vars:
     command: "hostname -I | awk '{print $1}'"
