@@ -22,9 +22,13 @@ Change to the rke2 directory
 ```
 cd rke2
 ```
-Run the playbook to create the cluster
+Make the initialise.sh script executable
 ```
-ansible-playbook -i production site.yml --tags create_cluster --limit kubeprod -K --ask-vault-pass
+sudo chmod +x initialise.sh
+```
+Run the initialise script to set the hostname and deploy rke2
+```
+sh initialise.sh
 ```
 Run the playbook to deploy metal LB
 ```
@@ -32,7 +36,7 @@ ansible-playbook -i production site.yml --tags deploy_metallb --limit kubeprod -
 ```
 Run the playbook to deploy the rest of the site
 ```
-ansible-playbook -i production site.yml --limit kubeprod -K --ask-vault-pass
+ansible-playbook -i production deploy_apps.yml --limit kubeprod -K --ask-vault-pass
 ```
 Add kubect to path
 ```
