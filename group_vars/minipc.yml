@@ -10,7 +10,7 @@ cluster_admin_password: !vault |
           3632
 kubeconfig_path: /etc/rancher/rke2/rke2.yaml
 kubectl_path: /var/lib/rancher/rke2/bin/kubectl
-helm_path: /usr/local/bin/helm
+helm_path: /usr/bin/helm
 cluster_fqdn: cluster.local
 bootstrap_password: password
 
