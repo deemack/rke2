@@ -18,7 +18,7 @@ persistent_volumes:
     capacity: 10Gi
     accessModes: ReadWriteOnce
 persistent_volume_claims:
-  - name: mysql-pv-claim
+  - name: chores-mysql-pv-claim
     storage: 5Gi
     accessModes: ReadWriteOnce
   - name: chores-pv-claim

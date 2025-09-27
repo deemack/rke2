@@ -35,30 +35,30 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: chores-secret
               key: ROOT_PASSWORD
         - name: MYSQL_DATABASE
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: chores-secret
               key: DATABASE
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: chores-secret
               key: USER
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: mysql-secret
+              name: chores-secret
               key: PASSWORD
         ports:
         - containerPort: 3306
-          name: mysql
+          name: chores-mysql
         volumeMounts:
-        - name: mysql-persistent-storage
+        - name: chores-mysql-persistent-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: mysql-persistent-storage
+      - name: chores-mysql-persistent-storage
         persistentVolumeClaim:
-          claimName: mysql-pv-claim
+          claimName: chores-mysql-pv-claim
