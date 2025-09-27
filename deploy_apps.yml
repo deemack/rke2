@@ -38,3 +38,7 @@
 - name: Deploy samba
   import_playbook: playbooks/deploy_samba.yml
   tags: deploy_samba
+
+- name: Deploy chores
+  import_playbook: playbooks/deploy_chores.yml
+  tags: deploy_chores
