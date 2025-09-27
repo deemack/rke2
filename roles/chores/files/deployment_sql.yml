@@ -1,17 +1,4 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: chores-mysql
-  namespace: chores
-spec:
-  selector:
-    app: chores-mysql
-  ports:
-  - name: chores-mysql
-    protocol: TCP
-    port: 3306
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
