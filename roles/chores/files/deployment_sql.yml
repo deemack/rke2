@@ -2,18 +2,18 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chores-mysql
+  name: choresdb
   namespace: chores
   labels:
-    app: chores-mysql
+    app: choresdb
 spec:
   selector:
     matchLabels:
-      app: chores-mysql
+      app: choresdb
   template:
     metadata:
       labels:
-        app: chores-mysql
+        app: choresdb
     spec:
       containers:
       - image: mysql:8.0
@@ -22,30 +22,30 @@ spec:
         - name: MYSQL_ROOT_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: chores-secret
+              name: choresdb-secret
               key: ROOT_PASSWORD
         - name: MYSQL_DATABASE
           valueFrom:
             secretKeyRef:
-              name: chores-secret
+              name: choresdb-secret
               key: DATABASE
         - name: MYSQL_USER
           valueFrom:
             secretKeyRef:
-              name: chores-secret
+              name: choresdb-secret
               key: USER
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: chores-secret
+              name: choresdb-secret
               key: PASSWORD
         ports:
         - containerPort: 3306
-          name: chores-mysql
+          name: choresdb
         volumeMounts:
-        - name: chores-mysql-persistent-storage
+        - name: choresdb-persistent-storage
           mountPath: /var/lib/mysql
       volumes:
-      - name: chores-mysql-persistent-storage
+      - name: choresdb-persistent-storage
         persistentVolumeClaim:
-          claimName: chores-mysql-pv-claim
+          claimName: choresdb-pv-claim

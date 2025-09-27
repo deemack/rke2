@@ -9,7 +9,7 @@ directories:
     owner: nobody
     group: nogroup
 persistent_volumes:
-  - name: chores-mysql
+  - name: choresdb
     path: /mnt/storage/chores/mysql
     capacity: 10Gi
     accessModes: ReadWriteOnce
@@ -18,7 +18,7 @@ persistent_volumes:
     capacity: 10Gi
     accessModes: ReadWriteOnce
 persistent_volume_claims:
-  - name: chores-mysql-pv-claim
+  - name: choresdb-pv-claim
     storage: 5Gi
     accessModes: ReadWriteOnce
   - name: chores-pv-claim
@@ -32,8 +32,8 @@ network:
     port: 80
     targetport: 80
   - type: ClusterIP
-    name: chores-mysql
-    app: chores-mysql
+    name: choresdb
+    app: choresdb
     port_name: database
     port: 3306
     targetport: 3306
