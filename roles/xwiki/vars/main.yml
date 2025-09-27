@@ -1,9 +1,9 @@
 namespace: xwiki
 directories:
   - path: /mnt/storage/xwiki/postgres
-    mode: '0755'
-    owner: nobody
-    group: nogroup
+    mode: '1777'
+    owner: postgres
+    group: postgres
   - path: /mnt/storage/xwiki/xwiki
     mode: '0777'
     owner: nobody
