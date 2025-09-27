@@ -1,0 +1,39 @@
+namespace: chores
+directories:
+  - path: /mnt/storage/chores/mysql
+    mode: '0755'
+    owner: nobody
+    group: nogroup
+  - path: /mnt/storage/chores/chores
+    mode: '0777'
+    owner: nobody
+    group: nogroup
+persistent_volumes:
+  - name: mysql
+    path: /mnt/storage/chores/mysql
+    capacity: 10Gi
+    accessModes: ReadWriteOnce
+  - name: chores
+    path: /mnt/storage/chores/chores
+    capacity: 10Gi
+    accessModes: ReadWriteOnce
+persistent_volume_claims:
+  - name: mysql-pv-claim
+    storage: 5Gi
+    accessModes: ReadWriteOnce
+  - name: chores-pv-claim
+    storage: 5Gi
+    accessModes: ReadWriteOnce
+network:
+  - type: NodePort
+    name: chores-service
+    app: chores
+    port_name: http
+    port: 80
+    targetport: 80
+  - type: ClusterIP
+    name: mysql
+    app: mysql
+    port_name: database
+    port: 3306
+    targetport: 3306
