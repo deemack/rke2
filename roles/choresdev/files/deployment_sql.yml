@@ -3,7 +3,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: choresdbdev
-  namespace: chores
+  namespace: choresdev
   labels:
     app: choresdbdev
 spec:
