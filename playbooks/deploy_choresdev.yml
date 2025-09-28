@@ -1,0 +1,7 @@
+---
+- name: Deploy Chores dev Application
+  hosts: minipc
+  become: true
+  gather_facts: true
+  roles:
+    - choresdev
