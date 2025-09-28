@@ -1,0 +1,50 @@
+---
+- name: Include create_namespace playbook
+  include_role:
+    name: common
+    tasks_from: create_namespace
+
+- name: Create Secrets
+  include_role:
+    name: secrets
+    tasks_from: main
+
+- name: Include create_mount_directory playbook
+  include_role:
+    name: common
+    tasks_from: create_mount_directory
+  loop: "{{ directories }}"
+
+- name: Include create_persistent_volume playbook
+  include_role:
+    name: common
+    tasks_from: create_persistent_volume
+  loop: "{{ persistent_volumes }}"
+
+- name: Include create_persistent_volume_claim playbook
+  include_role:
+    name: common
+    tasks_from: create_persistent_volume_claim
+  loop: "{{ persistent_volume_claims }}"
+
+- name: Deploy Chores DB
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: deployment_sql.yml
+
+- name: Deploy Chores App
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: deployment_chores.yml
+
+- name: Include create_service playbook
+  include_role:
+    name: common
+    tasks_from: create_service
+  loop: "{{ network }}"

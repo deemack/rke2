@@ -39,3 +39,5 @@ nodeports:
     port: 30060
   - application: chores-service
     port: 30061
+  - application: choresdev-service
+    port: 30062

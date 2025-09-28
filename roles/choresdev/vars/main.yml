@@ -1,0 +1,39 @@
+namespace: choresdev
+directories:
+  - path: /mnt/storage/choresdev/mysql
+    mode: '0755'
+    owner: nobody
+    group: nogroup
+  - path: /mnt/storage/choresdev/choresdev
+    mode: '0777'
+    owner: nobody
+    group: nogroup
+persistent_volumes:
+  - name: choresdbdev
+    path: /mnt/storage/choresdev/mysql
+    capacity: 10Gi
+    accessModes: ReadWriteOnce
+  - name: choresdev
+    path: /mnt/storage/choresdev/choresdev
+    capacity: 10Gi
+    accessModes: ReadWriteOnce
+persistent_volume_claims:
+  - name: choresdbdev-pv-claim
+    storage: 5Gi
+    accessModes: ReadWriteOnce
+  - name: choresdev-pv-claim
+    storage: 5Gi
+    accessModes: ReadWriteOnce
+network:
+  - type: NodePort
+    name: choresdev-service
+    app: choresdev
+    port_name: http
+    port: 8080
+    targetport: 8080
+  - type: ClusterIP
+    name: choresdbdev
+    app: choresdbdev
+    port_name: database
+    port: 3306
+    targetport: 3306

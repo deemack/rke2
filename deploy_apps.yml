@@ -42,3 +42,7 @@
 - name: Deploy chores
   import_playbook: playbooks/deploy_chores.yml
   tags: deploy_chores
+
+- name: Deploy choresdev
+  import_playbook: playbooks/deploy_choresdev.yml
+  tags: deploy_choresdev
