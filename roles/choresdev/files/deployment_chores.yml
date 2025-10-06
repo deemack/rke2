@@ -18,9 +18,9 @@ spec:
       - image: deemack/chores-java:1.12
         imagePullPolicy: Always
         volumeMounts:
-          - name: config-volume
-            mountPath: /config
-            readOnly: true
+        - name: config-volume
+          mountPath: /config
+          readOnly: true
         name: choresdev
         ports:
         - containerPort: 8080
@@ -28,9 +28,6 @@ spec:
         env:
         - name: SPRING_CONFIG_LOCATION
           value: file:/config/application.properties
-        envFrom:
-        - configMapRef:
-            name: choresdev-datasource-config
       volumes:
       - name: config-volume
         configMap:
