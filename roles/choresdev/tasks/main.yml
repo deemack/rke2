@@ -27,6 +27,14 @@
     tasks_from: create_persistent_volume_claim
   loop: "{{ persistent_volume_claims }}"
 
+- name: Deploy Chores ConfigMap
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig_path }}"
+    namespace: "{{ namespace }}"
+    api_version: v1
+    state: present
+    src: configmap.yml
+
 - name: Deploy Chores DB
   kubernetes.core.k8s:
     kubeconfig: "{{ kubeconfig_path }}"
