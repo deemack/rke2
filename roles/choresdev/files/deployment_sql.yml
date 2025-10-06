@@ -39,6 +39,9 @@ spec:
             secretKeyRef:
               name: choresdbdev-secret
               key: PASSWORD
+        envFrom:
+        - configMapRef:
+            name: choresdev-datasource-config
         ports:
         - containerPort: 3306
           name: choresdbdev
